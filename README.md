@@ -6,6 +6,16 @@ Performance Profiling of Host and Containerized Systems Using LMbench3
 ```
 GRUB_CMDLINE_LINUX_DEFAULT="autoinstall ds=nocloud\\;s=/cdrom/ quiet splash noprompt noshell automatic-ubiquity debian-installer/locale=en_US keyboard-configuration/layoutcode=us languagechooser/language-name=English localechooser/supported-locales=en_US.UTF-8 countrychooser/shortlist=IN -- isolcpus=1-3 nohz_full=1-3 rcu_nocbs=1-3"
 ```
+# Build the Project
+1. Get inside the lmbench folder: ```cd lmbench-3.0-a9```
+2. Build: ```make CFLAGS="-g -O0"```
+The executables will be inside `bin/x86_64-linux-gnu`
+
+# Running the benchmark
+1. On host: 
+	```
+	CPU_CORE=1 sudo ./host_perf.sh lat_syscall -P 1 -W 5 -N 10 null
+	```
 
 
 # Observability Tools
@@ -25,7 +35,7 @@ The above are example commands for lat_syscall, for the other benchmarks, do the
 3. perf report: (ensure that the perf.data is present in the present working directory) 
 ```
 sudo perf report
-``
+```
 
 ## Using perf on docker: 
 1. perf stat: 
