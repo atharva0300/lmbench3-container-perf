@@ -70,4 +70,4 @@ sudo perf stat /lmbench/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 100 null
 	- `-P 1 -W 5 -N 20 fstat` : measures how long it takes to fstat() an open file whose inode is already cached.
 	- `-P 1 -W 5 -N 20 open` : measures how long it takes to open() and then close() a file.
 
-
+2. future: lat_ctx, lat_proc, lat_pagefault, lat_pipe/lat_unix, lat_tcp, lat_udp (not to implement all but good choices for a visible output difference between host, docker and k8s)
