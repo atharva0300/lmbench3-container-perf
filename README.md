@@ -60,3 +60,14 @@ sudo perf stat /lmbench/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 100 null
 	- ```
 	  sudo perf stat -p <PID>
 	  ```
+
+## Benchmarks and Args
+1. lat_syscall : time simple entry into the operating system. [manpage](https://lmbench.sourceforge.net/man/lat_syscall.8.html) 
+	- `-P 1 -W 5 -N 20 null` : measures how long it takes to do getppid().
+	- `-P 1 -W 5 -N 20 read` : measures how long it takes to read one byte from CB/dev/zero.
+	- `-P 1 -W 5 -N 20 write` : measures times how long it takes to write one byte to CB/dev/null.
+	- `-P 1 -W 5 -N 20 stat` : measures how long it takes to stat() a file whose inode is already cached.
+	- `-P 1 -W 5 -N 20 fstat` : measures how long it takes to fstat() an open file whose inode is already cached.
+	- `-P 1 -W 5 -N 20 open` : measures how long it takes to open() and then close() a file.
+
+
