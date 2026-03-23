@@ -1,0 +1,47 @@
+===== SYSTEM INFO =====
+Mon 23 Mar 2026 10:33:17 AM UTC
+Linux atharva0300 5.4.0-216-generic #236-Ubuntu SMP Fri Apr 11 19:53:21 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+Architecture:                       x86_64
+CPU op-mode(s):                     32-bit, 64-bit
+Byte Order:                         Little Endian
+Address sizes:                      39 bits physical, 48 bits virtual
+CPU(s):                             4
+On-line CPU(s) list:                0-3
+Thread(s) per core:                 1
+Core(s) per socket:                 4
+Socket(s):                          1
+NUMA node(s):                       1
+Vendor ID:                          GenuineIntel
+CPU family:                         6
+Model:                              140
+Model name:                         11th Gen Intel(R) Core(TM) i5-1155G7 @ 2.50GHz
+Stepping:                           2
+CPU MHz:                            2495.998
+BogoMIPS:                           4991.99
+Hypervisor vendor:                  KVM
+Virtualization type:                full
+L1d cache:                          192 KiB
+L1i cache:                          128 KiB
+L2 cache:                           5 MiB
+L3 cache:                           32 MiB
+NUMA node0 CPU(s):                  0-3
+Vulnerability Gather data sampling: Not affected
+Vulnerability Itlb multihit:        Not affected
+Vulnerability L1tf:                 Not affected
+Vulnerability Mds:                  Not affected
+Vulnerability Meltdown:             Not affected
+Vulnerability Mmio stale data:      Not affected
+Vulnerability Retbleed:             Mitigation; Enhanced IBRS
+Vulnerability Spec store bypass:    Vulnerable
+Vulnerability Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:           Mitigation; Enhanced / Automatic IBRS; RSB filling; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
+Vulnerability Srbds:                Not affected
+Vulnerability Tsx async abort:      Not affected
+Flags:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single ibrs_enhanced fsgsbase bmi1 avx2 bmi2 invpcid rdseed adx clflushopt sha_ni arat md_clear flush_l1d arch_capabilities
+=======================
+
+Benchmark: lat_syscall
+Args: -P 1 -W 5 -N 10 null
+
+===== RAW RESULTS =====
+Run 1: 
