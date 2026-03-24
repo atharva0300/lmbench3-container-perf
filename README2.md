@@ -1,4 +1,3 @@
-````markdown
 # lmbench3-container-perf
 
 Performance Profiling and Comparative Analysis of **Host vs Docker vs Kubernetes** using **LMbench3** and Linux Observability Tools.
@@ -48,7 +47,7 @@ Edit `/etc/default/grub`:
 
 ```bash
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash isolcpus=1-3 nohz_full=1-3 rcu_nocbs=1-3"
-````
+```
 
 Then update:
 
