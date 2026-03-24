@@ -210,19 +210,7 @@ tracepoint:syscalls:sys_exit_getppid /@start[tid]/ {
 
 ---
 
-## Low Impact Benchmarks
-
-| Benchmark  | Reason             |
-| ---------- | ------------------ |
-| lat_mem_rd | hardware dominated |
-| cache      | no OS involvement  |
-| lat_ops    | CPU-only           |
-
----
-
 # Analysis Methodology
-
----
 
 ## Step 1: Run Benchmark
 
@@ -377,25 +365,8 @@ This project demonstrates that:
 
 ---
 
----
-
-# Future Work
-
-* Automate statistical analysis
-* Add visualization (graphs)
-* Extend to:
-
-  * multi-core scaling
-  * NUMA systems
-  * real-world workloads
-
----
-
----
-
 # Author
 
 Atharva Pingale
 
-```
 
