@@ -1,0 +1,40 @@
+===== SYSTEM INFO (DOCKER) =====
+Thu Mar 26 06:44:16 PM IST 2026
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-19-generic #19~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Fri Mar  6 23:08:46 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU core pinned: 1
+===============================
+
+Benchmark: lat_syscall
+Args: -P 1 -W 5 -N 50 read
+
+===== RAW RESULTS =====
+Run 1:
+Simple read: 0.3653 microseconds
+
+Run 2:
+Simple read: 0.3595 microseconds
+
+Run 3:
+Simple read: 0.3604 microseconds
+
+Run 4:
+Simple read: 0.3641 microseconds
+
+Run 5:
+Simple read: 0.3607 microseconds
+
+Run 6:
+Simple read: 0.3584 microseconds
+
+Run 7:
+Simple read: 0.3649 microseconds
+
+Run 8:
+Simple read: 0.3614 microseconds
+
+Run 9:
+Simple read: 0.3635 microseconds
+
+Run 10:
+Simple read: 0.3642 microseconds
+
