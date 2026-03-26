@@ -1,0 +1,64 @@
+strace: Process 12299 attached
+Simple syscall: 16.5803 microseconds
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 67.86    0.019779       19779         1           wait4
+ 31.29    0.009120           2      3644           getppid
+  0.42    0.000123           0       280           getrusage
+  0.17    0.000050           6         8           mmap
+  0.07    0.000021           7         3           mprotect
+  0.04    0.000012          12         1           munmap
+  0.03    0.000009           1         7           read
+  0.03    0.000009           1         7           write
+  0.02    0.000007           1         7           pselect6
+  0.01    0.000003           0        14           close
+  0.01    0.000003           3         1           arch_prctl
+  0.01    0.000003           3         1           set_tid_address
+  0.01    0.000003           3         1           prlimit64
+  0.01    0.000003           3         1           rseq
+  0.01    0.000002           1         2           set_robust_list
+  0.00    0.000000           0         2           fstat
+  0.00    0.000000           0         3           brk
+  0.00    0.000000           0         8           rt_sigaction
+  0.00    0.000000           0         2           pread64
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         2           alarm
+  0.00    0.000000           0         1           clone
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         2           openat
+  0.00    0.000000           0         4           pipe2
+  0.00    0.000000           0         1           getrandom
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.029147           7      4005         1 total
+strace: Process 14017 attached
+Simple syscall: 16.5796 microseconds
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 67.46    0.021631       21631         1           wait4
+ 31.49    0.010096           2      4021           getppid
+  0.42    0.000136           0       280           getrusage
+  0.23    0.000074           9         8           mmap
+  0.10    0.000031          10         3           mprotect
+  0.05    0.000015           2         7           read
+  0.05    0.000015          15         1           munmap
+  0.03    0.000009           4         2           fstat
+  0.03    0.000009           4         2           pread64
+  0.03    0.000009           4         2           openat
+  0.02    0.000008           1         7           write
+  0.02    0.000008           0        14           close
+  0.02    0.000005           5         1           prlimit64
+  0.01    0.000004           4         1           arch_prctl
+  0.01    0.000004           4         1           set_tid_address
+  0.01    0.000004           0         6           pselect6
+  0.01    0.000004           2         2           set_robust_list
+  0.01    0.000004           4         1           rseq
+  0.00    0.000000           0         3           brk
+  0.00    0.000000           0         8           rt_sigaction
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         2           alarm
+  0.00    0.000000           0         1           clone
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         4           pipe2
+  0.00    0.000000           0         1           getrandom
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.032066           7      4381         1 total
