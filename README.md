@@ -139,7 +139,7 @@ sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 50 null
 
 ```bash
 sudo taskset -c 1 perf stat ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 100 null \
-| sudo tee -a ./results/host/lat_syscall_perf_stat.txt
+| sudo tee -a ./results/host/lat_syscall_null/perf_stat.txt 
 ```
 
 ---
