@@ -3,19 +3,40 @@
 set -e
 
 # ==============================
+# HANDLE SUDO (FIX KUBECTL ISSUE)
+# ==============================
+
+if [ "$EUID" -eq 0 ]; then
+    if [ -z "$SUDO_USER" ]; then
+        echo "[ERROR] Cannot determine original user"
+        exit 1
+    fi
+
+    export KUBECONFIG="/home/$SUDO_USER/.kube/config"
+    echo "[INFO] Running as root, using kubeconfig: $KUBECONFIG"
+fi
+
+# ==============================
+# CHECK KUBERNETES CLUSTER
+# ==============================
+
+if ! kubectl cluster-info > /dev/null 2>&1; then
+    echo "[ERROR] Kubernetes cluster not running"
+    echo "[INFO] Try: minikube start"
+    exit 1
+fi
+
+# ==============================
 # INPUT VALIDATION
 # ==============================
 
 if [ $# -lt 1 ]; then
     echo "Usage: $0 <benchmark> [args...]"
-    echo "Example:"
-    echo "  $0 lat_syscall null -P 1 -W 5 -N 50"
     exit 1
 fi
 
 BENCH_NAME=$1
 shift
-
 ARGS="$@"
 
 # ==============================
@@ -26,13 +47,13 @@ OUTPUT_DIR="./results/k8s"
 RUNS=10
 CPU_CORE=${CPU_CORE:-1}
 
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
 OUT_FILE="$OUTPUT_DIR/${BENCH_NAME}_${TIMESTAMP}.txt"
 
 POD_NAME="lmbench-pod-$TIMESTAMP"
 
 HOST_LM_DIR="$(pwd)/lmbench-3.0-a9"
-CONTAINER_LM_DIR="/lmbench/bin/x86_64-linux-gnu"
+
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -60,14 +81,6 @@ spec:
         cpu: "1"
       limits:
         cpu: "1"
-    volumeMounts:
-    - mountPath: /lmbench
-      name: lmbench-vol
-  volumes:
-  - name: lmbench-vol
-    hostPath:
-      path: $HOST_LM_DIR
-      type: Directory
 EOF
 
 # ==============================
@@ -75,10 +88,28 @@ EOF
 # ==============================
 
 echo "[INFO] Creating pod..."
-kubectl apply -f pod.yaml
+kubectl apply -f pod.yaml --validate=false
 
 echo "[INFO] Waiting for pod to be ready..."
 kubectl wait --for=condition=Ready pod/$POD_NAME --timeout=60s
+
+echo "[INFO] Copying lmbench into pod..."
+kubectl cp "$HOST_LM_DIR" "$POD_NAME:/lmbench"
+
+sleep 2
+
+echo "[INFO] Detecting lmbench path inside pod..."
+
+LM_PATH=$(kubectl exec $POD_NAME -- find /lmbench -type d -name "x86_64-linux-gnu" | head -n 1)
+
+
+if [ -z "$LM_PATH" ]; then
+    echo "[ERROR] Could not find lmbench binary path"
+    kubectl exec $POD_NAME -- ls -R /lmbench
+    exit 1
+fi
+
+echo "[INFO] Found lmbench path: $LM_PATH"
 
 # ==============================
 # SYSTEM INFO LOGGING
@@ -108,7 +139,7 @@ do
     echo "Run $i:" | tee -a "$OUT_FILE"
 
     kubectl exec $POD_NAME -- \
-        $CONTAINER_LM_DIR/$BENCH_NAME $ARGS \
+        $LM_PATH/$BENCH_NAME $ARGS \
         2>&1 | tee -a "$OUT_FILE"
 
     echo "" >> "$OUT_FILE"
@@ -119,7 +150,7 @@ done
 # ==============================
 
 echo "[INFO] Deleting pod..."
-kubectl delete pod $POD_NAME
+kubectl delete pod $POD_NAME --ignore-not-found
 
 rm -f pod.yaml
 
