@@ -89,6 +89,11 @@ Executables:
 bin/x86_64-linux-gnu/
 ```
 
+# Give executable permission script file
+```bash
+chmod +x host_perf.sh
+```
+
 ---
 
 # Running Benchmarks
