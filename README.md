@@ -138,7 +138,8 @@ sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 50 null
 ### 1. perf stat
 
 ```bash
-sudo taskset -c 1 perf stat ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 100 null
+sudo taskset -c 1 perf stat ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 100 null \
+| sudo tee -a ./results/host/lat_syscall_perf_stat.txt
 ```
 
 ---
@@ -146,7 +147,9 @@ sudo taskset -c 1 perf stat ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P
 ### 2. perf record (call graph)
 
 ```bash
-sudo taskset -c 1 perf record -F 999 -g ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 100 null
+sudo taskset -c 1 perf record -F 999 -g \
+-o ./results/host/lat_syscall_null/perf.data \
+./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 null
 ```
 
 ---
@@ -154,7 +157,9 @@ sudo taskset -c 1 perf record -F 999 -g ./lmbench-3.0-a9/bin/x86_64-linux-gnu/la
 ### 3. perf report
 
 ```bash
-sudo perf report --call-graph=graph
+sudo perf report \
+-i results/host/lat_syscall_null/perf.data \
+--call-graph=graph
 ```
 
 Shows full syscall path:
@@ -168,7 +173,8 @@ User → libc → syscall entry → kernel → return
 ## strace
 
 ```bash
-strace -c -f ./lat_syscall null
+sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall null \
+2>&1 | sudo tee -a ./results/host/lat_syscall_null/strace.txt
 ```
 
 Shows:
@@ -182,14 +188,21 @@ Shows:
 ## bpftrace
 
 Example (syscall latency histogram):
+Terminal 1:
 
 ```bash
-sudo bpftrace -e '
+sudo timeout 10s bpftrace -e '
 tracepoint:syscalls:sys_enter_getppid { @start[tid] = nsecs; }
 tracepoint:syscalls:sys_exit_getppid /@start[tid]/ {
   @lat = hist(nsecs - @start[tid]);
   delete(@start[tid]);
-}'
+}' \
+| sudo tee results/host/lat_syscall_null/bpftrace.txt
+```
+
+Terminal 2: 
+```
+./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 null
 ```
 
 ---
