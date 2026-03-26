@@ -1,0 +1,40 @@
+===== SYSTEM INFO (K8s) =====
+Thu Mar 26 07:38:45 PM IST 2026
+NAME                          READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+lmbench-pod-20260326-193842   1/1     Running   0          4s    10.244.0.18   minikube   <none>           <none>
+============================
+
+Benchmark: lat_syscall
+Args: -P 1 -W 5 -N 50 write
+
+===== RAW RESULTS =====
+Run 1:
+Simple write: 0.2263 microseconds
+
+Run 2:
+Simple write: 0.2342 microseconds
+
+Run 3:
+Simple write: 0.2324 microseconds
+
+Run 4:
+Simple write: 0.2325 microseconds
+
+Run 5:
+Simple write: 0.2329 microseconds
+
+Run 6:
+Simple write: 0.2320 microseconds
+
+Run 7:
+Simple write: 0.2319 microseconds
+
+Run 8:
+Simple write: 0.2325 microseconds
+
+Run 9:
+Simple write: 0.2344 microseconds
+
+Run 10:
+Simple write: 0.2321 microseconds
+
