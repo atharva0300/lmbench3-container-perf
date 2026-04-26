@@ -29,6 +29,9 @@ CPU_CORE=${CPU_CORE:-1}
 
 POD_NAME="lmbench-$(date +%s)"
 
+# ✅ FIX: Guaranteed cleanup. This ensures the pod is deleted even if the script crashes.
+trap 'kubectl delete pod $POD_NAME --force --grace-period=0 2>/dev/null || true; rm -f pod.yaml 2>/dev/null || true' EXIT
+
 if [ -n "$CUSTOM_OUT" ]; then
     OUT_FILE="$CUSTOM_OUT"
 else
@@ -85,9 +88,8 @@ do
         exit 1
     }
 
-    # ✅ UNIVERSAL EXTRACTION LOGIC
     if [[ "$BENCH_NAME" == "lat_ctx" ]]; then
-        VAL=$(echo "$OUTPUT" | tail -n 1 | awk '{print $2}')
+        VAL=$(echo "$OUTPUT" | awk '/^[0-9]+ [0-9]+\.[0-9]+/ {print $2}' | head -n 1)
     else
         VAL=$(echo "$OUTPUT" | awk '/microseconds/ {for(j=1;j<=NF;j++) if($j ~ /^[0-9]+\.[0-9]+$/) print $j}' | head -n 1)
     fi
@@ -99,9 +101,6 @@ do
     fi
     sleep 0.2
 done
-
-kubectl delete pod $POD_NAME
-rm pod.yaml
 
 COUNT=${#VALUES[@]}
 

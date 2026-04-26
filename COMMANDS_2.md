@@ -284,6 +284,11 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_ctx -P 1 -W 5 -N 50 -s 32 2 -o results/k8s/lat
 ### 5. Metric: `lat_proc`
 
 #### Phase 1: Profiling
+**Warmup sudo credentials**
+```bash
+sudo -v
+```
+
 **Host:**
 ```bash
 mkdir -p results/host/lat_proc
@@ -310,7 +315,7 @@ CPU_CORE=1 sudo ./docker_perf.sh lat_proc -P 1 -W 5 -N 10000000 fork -o /dev/nul
 echo "[INFO] Hunting for Container PID..."
 PID=""
 for i in {1..20}; do
-    PID=$(pgrep -n -x lat_proc) # FIX: -n grabs only the newest PID
+    PID=$(pgrep -n -x lat_proc)
     if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
     sleep 1
 done
@@ -336,7 +341,7 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_proc -P 1 -W 5 -N 10000000 fork -o /dev/null >
 echo "[INFO] Hunting for K8s PID..."
 PID=""
 for i in {1..30}; do
-    PID=$(pgrep -n -x lat_proc) # FIX: -n grabs only the newest PID
+    PID=$(pgrep -n -x lat_proc) 
     if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
     sleep 1
 done

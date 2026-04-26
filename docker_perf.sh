@@ -47,8 +47,9 @@ VALUES=()
 
 for i in $(seq 1 $RUNS)
 do
-    # ✅ FIX: Added --privileged to bypass AppArmor fork restrictions
+    # ✅ FIX 1: Added --init to reap zombie processes and prevent container freezing!
     OUTPUT=$(docker run --rm \
+        --init \
         --cpuset-cpus="$CPU_CORE" \
         --privileged \
         --pids-limit -1 \
@@ -61,11 +62,14 @@ do
         exit 1
     }
 
+    # ✅ FIX 2: Strip invisible carriage returns from Docker output
+    CLEAN_OUTPUT=$(echo "$OUTPUT" | tr -d '\r')
+
     # ✅ BULLETPROOF EXTRACTION
     if [[ "$BENCH_NAME" == "lat_ctx" ]]; then
-        VAL=$(echo "$OUTPUT" | awk '/^[0-9]+ [0-9]+\.[0-9]+/ {print $2}' | head -n 1)
+        VAL=$(echo "$CLEAN_OUTPUT" | awk '/^[0-9]+ [0-9]+\.[0-9]+/ {print $2}' | head -n 1)
     else
-        VAL=$(echo "$OUTPUT" | awk '/microseconds/ {for(j=1;j<=NF;j++) if($j ~ /^[0-9]+\.[0-9]+$/) print $j}' | head -n 1)
+        VAL=$(echo "$CLEAN_OUTPUT" | awk '/microseconds/ {for(j=1;j<=NF;j++) if($j ~ /^[0-9]+\.[0-9]+/) print $j}' | head -n 1)
     fi
 
     echo "Run $i: $VAL" | tee -a "$OUT_FILE"
