@@ -1,0 +1,16 @@
+# started on Sun Apr 26 21:50:39 2026
+
+
+ Performance counter stats for process id '117019':
+
+     4,998,341,393      task-clock                       #    0.999 CPUs utilized             
+                12      context-switches                 #    2.401 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 5      page-faults                      #    1.000 /sec                      
+    20,871,003,711      instructions                     #    1.67  insn per cycle            
+    12,466,513,421      cycles                           #    2.494 GHz                       
+     4,875,695,031      branches                         #  975.463 M/sec                     
+         4,474,818      branch-misses                    #    0.09% of all branches           
+
+       5.001199392 seconds time elapsed
+

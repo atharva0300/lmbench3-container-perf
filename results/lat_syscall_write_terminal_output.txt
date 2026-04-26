@@ -1,0 +1,291 @@
+mohitkhapekar-ASUS-TUF-Gaming% mkdir -p results/host/lat_syscall_write
+echo "[INFO] Running perf stat, perf record, and strace..."
+sudo taskset -c 1 perf stat -o ./results/host/lat_syscall_write/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 write
+sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_syscall_write/perf.data ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 write
+sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall write 2>&1 | sudo tee ./results/host/lat_syscall_write/strace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_syscall -P 1 -W 5 -N 100000 write > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_syscall | tail -n 1)
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_write /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_write /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_syscall_write/bpftrace.txt
+sudo pkill -9 -x lat_syscall 2>/dev/null || true
+echo "[INFO] Host profiling complete."
+[INFO] Running perf stat, perf record, and strace...
+Simple write: 0.3197 microseconds
+Simple write: 0.3253 microseconds
+[ perf record: Woken up 1631 times to write data ]
+[ perf record: Captured and wrote 1.541 MB ./results/host/lat_syscall_write/perf.data (12522 samples) ]
+strace: Process 112699 attached
+Simple write: 17.9353 microseconds
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 66.71    0.039817       39817         1           wait4
+ 31.78    0.018969           2      6777           write
+  0.33    0.000198         198         1           execve
+  0.25    0.000148         148         1           clone
+  0.22    0.000129           0       380           getrusage
+  0.14    0.000085          10         8           mmap
+  0.11    0.000063           4        15           close
+  0.09    0.000056           9         6           pselect6
+  0.07    0.000040           2        18           getppid
+  0.06    0.000036           5         7           read
+  0.06    0.000033          11         3           openat
+  0.04    0.000023           7         3           mprotect
+  0.03    0.000018           2         8           rt_sigaction
+  0.02    0.000013          13         1           munmap
+  0.02    0.000011           5         2           fstat
+  0.02    0.000009           4         2           alarm
+  0.01    0.000008           8         1         1 access
+  0.01    0.000007           3         2           pread64
+  0.01    0.000006           2         3           brk
+  0.01    0.000003           3         1           arch_prctl
+  0.01    0.000003           1         2           set_robust_list
+  0.01    0.000003           3         1           prlimit64
+  0.01    0.000003           3         1           rseq
+  0.00    0.000002           2         1           set_tid_address
+  0.00    0.000000           0         4           pipe2
+  0.00    0.000000           0         1           getrandom
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.059683           8      7250         1 total
+[INFO] Launching background process for bpftrace...
+[1] 112700
+Attaching 2 probes...
+
+
+@lat: 
+[256, 512)      12111466 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[512, 1K)         248775 |@                                                   |
+[1K, 2K)              96 |                                                    |
+[2K, 4K)              31 |                                                    |
+[4K, 8K)             458 |                                                    |
+[8K, 16K)             39 |                                                    |
+[16K, 32K)             0 |                                                    |
+[32K, 64K)             0 |                                                    |
+[64K, 128K)            0 |                                                    |
+[128K, 256K)           1 |                                                    |
+[256K, 512K)           4 |                                                    |
+
+
+[INFO] Host profiling complete.
+mohitkhapekar-ASUS-TUF-Gaming% 
+[1]  + exit 137   CPU_CORE=1 sudo ./host_perf.sh lat_syscall -P 1 -W 5 -N 100000 write >  2>&1
+mohitkhapekar-ASUS-TUF-Gaming% CPU_CORE=1 sudo ./host_perf.sh lat_syscall -P 1 -W 5 -N 50 write -o results/host/lat_syscall_write/lat_syscall_write.txt
+Run 1: 0.3202
+Run 2: 0.3210
+Run 3: 0.3223
+Run 4: 0.3235
+Run 5: 0.3203
+Run 6: 0.3194
+Run 7: 0.3252
+Run 8: 0.3259
+Run 9: 0.3194
+Run 10: 0.3253
+Run 11: 0.3225
+Run 12: 0.3250
+Run 13: 0.3210
+Run 14: 0.3190
+Run 15: 0.3261
+Run 16: 0.3216
+Run 17: 0.3186
+Run 18: 0.3218
+Run 19: 0.3272
+Run 20: 0.3207
+Run 21: 0.3210
+Run 22: 0.3203
+Run 23: 0.3212
+Run 24: 0.3242
+Run 25: 0.3249
+
+===== STATISTICS =====
+Samples: 20
+Mean: .32251500000000000000
+Median: .32170000000000000000
+Variance: .00000694427500000000
+Standard Deviation: .00263519923345465475
+Min: 0.3186
+Max: 0.3272
+Variation (Range): .0086
+Coefficient of Variation (%): .81707803775162542800
+======================
+[INFO] Completed lat_syscall (Host)
+[INFO] Mean: .32251500000000000000 | Median: .32170000000000000000 | StdDev: .00263519923345465475 | COV: .81707803775162542800%
+mohitkhapekar-ASUS-TUF-Gaming% mkdir -p results/docker/lat_syscall_write
+echo "[INFO] Launching Docker benchmark in background..."
+CPU_CORE=1 sudo ./docker_perf.sh lat_syscall -P 1 -W 5 -N 100000 write > /dev/null 2>&1 &
+sleep 5
+PID=$(pgrep -x lat_syscall | tail -n 1)
+echo "[INFO] Attaching to Container PID: $PID"
+sudo perf stat -p $PID -o ./results/docker/lat_syscall_write/perf_stat.txt -- sleep 5
+sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_syscall_write/perf.data -- sleep 5
+sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/docker/lat_syscall_write/strace.txt
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_write /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_write /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/docker/lat_syscall_write/bpftrace.txt
+sudo pkill -9 -x lat_syscall 2>/dev/null || true
+echo "[INFO] Docker profiling complete."
+[INFO] Launching Docker benchmark in background...
+[1] 113626
+[INFO] Attaching to Container PID: 113711
+[ perf record: Woken up 3 times to write data ]
+[ perf record: Captured and wrote 0.565 MB ./results/docker/lat_syscall_write/perf.data (5001 samples) ]
+strace: Process 113711 attached
+strace: Process 113711 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 98.89    0.678365           2    265542           write
+  0.78    0.005375           3      1716           getrusage
+  0.32    0.002214           2       858           getppid
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.685954           2    268116           total
+Attaching 2 probes...
+
+
+@lat: 
+[256, 512)      11647176 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[512, 1K)         261640 |@                                                   |
+[1K, 2K)             100 |                                                    |
+[2K, 4K)               9 |                                                    |
+[4K, 8K)             407 |                                                    |
+[8K, 16K)             39 |                                                    |
+[16K, 32K)             0 |                                                    |
+[32K, 64K)             0 |                                                    |
+[64K, 128K)            0 |                                                    |
+[128K, 256K)           0 |                                                    |
+[256K, 512K)           2 |                                                    |
+
+
+[INFO] Docker profiling complete.
+mohitkhapekar-ASUS-TUF-Gaming% 
+[1]  + exit 1     CPU_CORE=1 sudo ./docker_perf.sh lat_syscall -P 1 -W 5 -N 100000 write >  2>&
+mohitkhapekar-ASUS-TUF-Gaming% CPU_CORE=1 sudo ./docker_perf.sh lat_syscall -P 1 -W 5 -N 50 write -o results/docker/lat_syscall_write/lat_syscall_write.txt
+Run 1: 0.3453
+Run 2: 0.3430
+Run 3: 0.3451
+Run 4: 0.3534
+Run 5: 0.3417
+Run 6: 0.3554
+Run 7: 0.3531
+Run 8: 0.3439
+Run 9: 0.3409
+Run 10: 0.3384
+Run 11: 0.3402
+Run 12: 0.3424
+Run 13: 0.3439
+Run 14: 0.3465
+Run 15: 0.3482
+Run 16: 0.3468
+Run 17: 0.3440
+Run 18: 0.3463
+Run 19: 0.3418
+Run 20: 0.3459
+Run 21: 0.3464
+Run 22: 0.3435
+Run 23: 0.3481
+Run 24: 0.3464
+Run 25: 0.3470
+
+===== STATISTICS =====
+Samples: 20
+Mean: .34545500000000000000
+Median: .34610000000000000000
+Variance: .00001557347500000000
+Standard Deviation: .00394632423908629180
+Min: 0.3384
+Max: 0.3554
+Variation (Range): .0170
+Coefficient of Variation (%): 1.14235551347825094400
+======================
+[INFO] Completed lat_syscall (Docker)
+[INFO] Mean: .34545500000000000000 | Median: .34610000000000000000 | StdDev: .00394632423908629180 | COV: 1.14235551347825094400%
+mohitkhapekar-ASUS-TUF-Gaming% mkdir -p results/k8s/lat_syscall_write
+echo "[INFO] Launching K8s benchmark in background..."
+CPU_CORE=1 sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 100000 write > /dev/null 2>&1 &
+sleep 15
+PID=$(pgrep -x lat_syscall | tail -n 1)
+echo "[INFO] Attaching to K8s PID: $PID"
+sudo perf stat -p $PID -o ./results/k8s/lat_syscall_write/perf_stat.txt -- sleep 5
+sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_syscall_write/perf.data -- sleep 5
+sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/k8s/lat_syscall_write/strace.txt
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_write /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_write /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/k8s/lat_syscall_write/bpftrace.txt
+sudo pkill -9 -x lat_syscall 2>/dev/null || true
+echo "[INFO] K8s profiling complete."
+[INFO] Launching K8s benchmark in background...
+[1] 116744
+[INFO] Attaching to K8s PID: 117019
+[ perf record: Woken up 3 times to write data ]
+[ perf record: Captured and wrote 0.561 MB ./results/k8s/lat_syscall_write/perf.data (5002 samples) ]
+strace: Process 117019 attached
+strace: Process 117019 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 98.68    0.913339           4    222714           write
+  0.93    0.008565           4      1754           getrusage
+  0.39    0.003652           4       877           getppid
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.925556           4    225345           total
+Attaching 2 probes...
+
+
+@lat: 
+[256, 512)      11732205 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[512, 1K)         219263 |                                                    |
+[1K, 2K)             129 |                                                    |
+[2K, 4K)            2076 |                                                    |
+[4K, 8K)            1833 |                                                    |
+[8K, 16K)             69 |                                                    |
+[16K, 32K)             3 |                                                    |
+[32K, 64K)             1 |                                                    |
+[64K, 128K)            0 |                                                    |
+[128K, 256K)           0 |                                                    |
+[256K, 512K)           3 |                                                    |
+
+
+[INFO] K8s profiling complete.
+mohitkhapekar-ASUS-TUF-Gaming% 
+[1]  + exit 1     CPU_CORE=1 sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 100000 write >  2>&1
+mohitkhapekar-ASUS-TUF-Gaming% CPU_CORE=1 sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 50 write -o results/k8s/lat_syscall_write/lat_syscall_write.txt
+
+
+pod/lmbench-1777220474 created
+pod/lmbench-1777220474 condition met
+Run 1: 0.3345
+Run 2: 0.3341
+Run 3: 0.3350
+Run 4: 0.3333
+Run 5: 0.3337
+Run 6: 0.3284
+Run 7: 0.3289
+Run 8: 0.3353
+Run 9: 0.3347
+Run 10: 0.3342
+Run 11: 0.3397
+Run 12: 0.3331
+Run 13: 0.3391
+Run 14: 0.3369
+Run 15: 0.3391
+Run 16: 0.3343
+Run 17: 0.3282
+Run 18: 0.3341
+Run 19: 0.3391
+Run 20: 0.3331
+Run 21: 0.3313
+Run 22: 0.3312
+Run 23: 0.3348
+Run 24: 0.3339
+Run 25: 0.3346
+pod "lmbench-1777220474" deleted
+
+===== STATISTICS =====
+Samples: 20
+Mean: .33420000000000000000
+Median: .33425000000000000000
+Variance: .00001146100000000000
+Standard Deviation: .00338540987178805278
+Min: 0.3282
+Max: 0.3397
+Variation (Range): .0115
+Coefficient of Variation (%): 1.01298918964334314100
+======================
+[INFO] Completed lat_syscall (K8s)
+[INFO] Mean: .33420000000000000000 | Median: .33425000000000000000 | StdDev: .00338540987178805278 | COV: 1.01298918964334314100%
+mohitkhapekar-ASUS-TUF-Gaming% 
+
