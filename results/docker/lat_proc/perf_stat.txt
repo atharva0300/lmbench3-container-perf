@@ -1,0 +1,16 @@
+# started on Sun Apr 26 23:43:19 2026
+
+
+ Performance counter stats for process id '2774263':
+
+     3,651,856,902      task-clock                       #    0.730 CPUs utilized             
+            26,125      context-switches                 #    7.154 K/sec                     
+                 0      cpu-migrations                   #    0.000 /sec                      
+           708,287      page-faults                      #  193.953 K/sec                     
+     9,879,298,631      instructions                     #    1.12  insn per cycle            
+     8,818,548,078      cycles                           #    2.415 GHz                       
+     1,793,960,472      branches                         #  491.246 M/sec                     
+         9,968,433      branch-misses                    #    0.56% of all branches           
+
+       5.003880230 seconds time elapsed
+
