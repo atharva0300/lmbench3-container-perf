@@ -49,6 +49,8 @@ for i in $(seq 1 $RUNS)
 do
     OUTPUT=$(docker run --rm \
         --cpuset-cpus="$CPU_CORE" \
+        --pids-limit -1 \
+        --security-opt seccomp=unconfined \
         -v "$(pwd)/lmbench-3.0-a9":/lmbench \
         ubuntu:24.04 \
         bash -c "/lmbench/bin/x86_64-linux-gnu/$BENCH_NAME ${ARGS[*]}" 2>&1) || {
