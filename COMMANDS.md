@@ -13,9 +13,18 @@ Here is your complete, master list of exact commands for all 6 metrics across al
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_syscall_null
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_syscall_null/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 null
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall null 2>&1 | sudo tee ./results/host/lat_syscall_null/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_getppid { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_getppid /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_syscall_null/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_syscall -P 1 -W 5 -N 100000 null > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_syscall | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_getppid /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_getppid /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_syscall_null/bpftrace.txt
+sudo pkill -9 -x lat_syscall 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
@@ -64,9 +73,18 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 50 null -o results/k8s/la
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_syscall_read
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_syscall_read/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 read
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall read 2>&1 | sudo tee ./results/host/lat_syscall_read/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_read { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_syscall_read/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_syscall -P 1 -W 5 -N 100000 read > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_syscall | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_read /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_syscall_read/bpftrace.txt
+sudo pkill -9 -x lat_syscall 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
@@ -115,9 +133,18 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 50 read -o results/k8s/la
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_syscall_write
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_syscall_write/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 write
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall write 2>&1 | sudo tee ./results/host/lat_syscall_write/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_write { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_write /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_syscall_write/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_syscall -P 1 -W 5 -N 100000 write > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_syscall | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_write /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_write /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_syscall_write/bpftrace.txt
+sudo pkill -9 -x lat_syscall 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
@@ -166,9 +193,18 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_syscall -P 1 -W 5 -N 50 write -o results/k8s/l
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_ctx
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_ctx/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_ctx -P 1 -W 5 -N 1000 -s 32 2
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_ctx -s 32 2 2>&1 | sudo tee ./results/host/lat_ctx/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:sched:sched_switch { @counts[comm] = count(); }" | sudo tee ./results/host/lat_ctx/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_ctx -P 1 -W 5 -N 100000 -s 32 2 > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_ctx | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:sched:sched_switch /pid == $PID/ { @counts[comm] = count(); }" | sudo tee ./results/host/lat_ctx/bpftrace.txt
+sudo pkill -9 -x lat_ctx 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
@@ -217,9 +253,18 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_ctx -P 1 -W 5 -N 50 -s 32 2 -o results/k8s/lat
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_proc
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_proc/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_proc -P 1 -W 5 -N 1000 fork
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_proc fork 2>&1 | sudo tee ./results/host/lat_proc/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_clone { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_clone /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_proc/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_proc -P 1 -W 5 -N 100000 fork > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_proc | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_clone /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_clone /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_proc/bpftrace.txt
+sudo pkill -9 -x lat_proc 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
@@ -268,9 +313,18 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_proc -P 1 -W 5 -N 50 fork -o results/k8s/lat_p
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_pagefault
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_pagefault/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault -P 1 -W 5 -N 1000 /tmp/test
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault /tmp/test 2>&1 | sudo tee ./results/host/lat_pagefault/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_mmap { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_pagefault/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_pagefault -P 1 -W 5 -N 100000 /tmp/test > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_pagefault | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_mmap /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_pagefault/bpftrace.txt
+sudo pkill -9 -x lat_pagefault 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
@@ -343,9 +397,18 @@ echo "Host IP configured as: $HOST_IP"
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_tcp
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_tcp/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_tcp -P 1 -W 5 -N 1000 localhost
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_tcp localhost 2>&1 | sudo tee ./results/host/lat_tcp/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_recvfrom { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_recvfrom /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_tcp/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_tcp -P 1 -W 5 -N 100000 localhost > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_tcp | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_recvfrom /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_recvfrom /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_tcp/bpftrace.txt
+sudo kill -9 $PID 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
@@ -394,9 +457,18 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_tcp -P 1 -W 5 -N 50 $HOST_IP -o results/k8s/la
 **Host Profiling:**
 ```bash
 mkdir -p results/host/lat_udp
+echo "[INFO] Running perf stat and strace..."
 sudo taskset -c 1 perf stat -o ./results/host/lat_udp/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_udp -P 1 -W 5 -N 1000 localhost
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_udp localhost 2>&1 | sudo tee ./results/host/lat_udp/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_recvfrom { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_recvfrom /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_udp/bpftrace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_udp -P 1 -W 5 -N 100000 localhost > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -x lat_udp | tail -n 1)
+echo "[INFO] Attaching bpftrace to PID: $PID"
+sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_recvfrom /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_recvfrom /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_udp/bpftrace.txt
+sudo kill -9 $PID 2>/dev/null || true
+echo "[INFO] Host profiling complete."
 ```
 
 **Docker Profiling:**
