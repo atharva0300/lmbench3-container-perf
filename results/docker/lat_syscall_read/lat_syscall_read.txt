@@ -1,40 +1,44 @@
-===== SYSTEM INFO (DOCKER) =====
-Thu Mar 26 06:44:16 PM IST 2026
-Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-19-generic #19~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Fri Mar  6 23:08:46 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
-CPU core pinned: 1
-===============================
-
-Benchmark: lat_syscall
-Args: -P 1 -W 5 -N 50 read
+=== System & Config Info (Docker) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (Docker cpuset): 1
+Benchmark Command: lat_syscall -P 1 -W 5 -N 50 read
+=====================================
 
 ===== RAW RESULTS =====
-Run 1:
-Simple read: 0.3653 microseconds
+Run 1: 0.3599
+Run 2: 0.3597
+Run 3: 0.3578
+Run 4: 0.3575
+Run 5: 0.3659
+Run 6: 0.3588
+Run 7: 0.3535
+Run 8: 0.3603
+Run 9: 0.3581
+Run 10: 0.3625
+Run 11: 0.3658
+Run 12: 0.3631
+Run 13: 0.3599
+Run 14: 0.3570
+Run 15: 0.3592
+Run 16: 0.3580
+Run 17: 0.3604
+Run 18: 0.3592
+Run 19: 0.3614
+Run 20: 0.3626
+Run 21: 0.3582
+Run 22: 0.3608
+Run 23: 0.3585
+Run 24: 0.3622
+Run 25: 0.3577
 
-Run 2:
-Simple read: 0.3595 microseconds
-
-Run 3:
-Simple read: 0.3604 microseconds
-
-Run 4:
-Simple read: 0.3641 microseconds
-
-Run 5:
-Simple read: 0.3607 microseconds
-
-Run 6:
-Simple read: 0.3584 microseconds
-
-Run 7:
-Simple read: 0.3649 microseconds
-
-Run 8:
-Simple read: 0.3614 microseconds
-
-Run 9:
-Simple read: 0.3635 microseconds
-
-Run 10:
-Simple read: 0.3642 microseconds
-
+===== STATISTICS =====
+Samples: 20
+Mean: .35986000000000000000
+Median: .35955000000000000000
+Variance: .00000679640000000000
+Standard Deviation: .00260699060220784071
+Min: 0.3535
+Max: 0.3658
+Variation (Range): .0123
+Coefficient of Variation (%): .72444578508526668900
+======================
