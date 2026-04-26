@@ -1,87 +1,44 @@
-===== SYSTEM INFO =====
-Thu Mar 26 05:25:13 PM IST 2026
-Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-19-generic #19~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Fri Mar  6 23:08:46 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
-Architecture:                            x86_64
-CPU op-mode(s):                          32-bit, 64-bit
-Address sizes:                           39 bits physical, 48 bits virtual
-Byte Order:                              Little Endian
-CPU(s):                                  8
-On-line CPU(s) list:                     0-7
-Vendor ID:                               GenuineIntel
-BIOS Vendor ID:                          Intel(R) Corporation
-Model name:                              Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz
-BIOS Model name:                         Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz To Be Filled By O.E.M. CPU @ 2.3GHz
-BIOS CPU family:                         205
-CPU family:                              6
-Model:                                   165
-Thread(s) per core:                      2
-Core(s) per socket:                      4
-Socket(s):                               1
-Stepping:                                2
-CPU(s) scaling MHz:                      75%
-CPU max MHz:                             2500.0000
-CPU min MHz:                             800.0000
-BogoMIPS:                                4999.90
-Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp vnmi pku ospke md_clear flush_l1d arch_capabilities
-Virtualization:                          VT-x
-L1d cache:                               128 KiB (4 instances)
-L1i cache:                               128 KiB (4 instances)
-L2 cache:                                1 MiB (4 instances)
-L3 cache:                                8 MiB (1 instance)
-NUMA node(s):                            1
-NUMA node0 CPU(s):                       0-7
-Vulnerability Gather data sampling:      Vulnerable
-Vulnerability Ghostwrite:                Not affected
-Vulnerability Indirect target selection: Mitigation; Aligned branch/return thunks
-Vulnerability Itlb multihit:             KVM: Mitigation: Split huge pages
-Vulnerability L1tf:                      Not affected
-Vulnerability Mds:                       Not affected
-Vulnerability Meltdown:                  Not affected
-Vulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable
-Vulnerability Old microcode:             Not affected
-Vulnerability Reg file data sampling:    Not affected
-Vulnerability Retbleed:                  Mitigation; Enhanced IBRS
-Vulnerability Spec rstack overflow:      Not affected
-Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
-Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
-Vulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
-Vulnerability Srbds:                     Mitigation; Microcode
-Vulnerability Tsa:                       Not affected
-Vulnerability Tsx async abort:           Not affected
-Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspace
-=======================
-
-Benchmark: lat_syscall
-Args: -P 1 -W 5 -N 50 null
+=== System & Config Info (Host) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (taskset): 1
+Benchmark Command: lat_syscall -P 1 -W 5 -N 50 null
+===================================
 
 ===== RAW RESULTS =====
-Run 1:
-Simple syscall: 0.2450 microseconds
+Run 1: 0.2369
+Run 2: 0.2364
+Run 3: 0.2373
+Run 4: 0.2370
+Run 5: 0.2370
+Run 6: 0.2372
+Run 7: 0.2375
+Run 8: 0.2390
+Run 9: 0.2378
+Run 10: 0.2375
+Run 11: 0.2370
+Run 12: 0.2369
+Run 13: 0.2370
+Run 14: 0.2379
+Run 15: 0.2372
+Run 16: 0.2371
+Run 17: 0.2379
+Run 18: 0.2375
+Run 19: 0.2369
+Run 20: 0.2370
+Run 21: 0.2368
+Run 22: 0.2368
+Run 23: 0.2366
+Run 24: 0.2384
+Run 25: 0.2389
 
-Run 2:
-Simple syscall: 0.2450 microseconds
-
-Run 3:
-Simple syscall: 0.2449 microseconds
-
-Run 4:
-Simple syscall: 0.2450 microseconds
-
-Run 5:
-Simple syscall: 0.2451 microseconds
-
-Run 6:
-Simple syscall: 0.2451 microseconds
-
-Run 7:
-Simple syscall: 0.2453 microseconds
-
-Run 8:
-Simple syscall: 0.2447 microseconds
-
-Run 9:
-Simple syscall: 0.2450 microseconds
-
-Run 10:
-Simple syscall: 0.2454 microseconds
-
+===== STATISTICS =====
+Samples: 20
+Mean: .23744500000000000000
+Median: .23720000000000000000
+Variance: .00000044847500000000
+Standard Deviation: .00066968276071584820
+Min: 0.2366
+Max: 0.2390
+Variation (Range): .0024
+Coefficient of Variation (%): .28203700255463294600
+======================

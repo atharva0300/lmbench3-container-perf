@@ -1,0 +1,16 @@
+# started on Sun Apr 26 21:29:24 2026
+
+
+ Performance counter stats for process id '98069':
+
+     5,001,442,236      task-clock                       #    1.000 CPUs utilized             
+                 5      context-switches                 #    1.000 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 4      page-faults                      #    0.800 /sec                      
+    19,561,648,668      instructions                     #    1.57  insn per cycle            
+    12,474,407,367      cycles                           #    2.494 GHz                       
+     4,965,800,184      branches                         #  992.874 M/sec                     
+            59,014      branch-misses                    #    0.00% of all branches           
+
+       5.001396130 seconds time elapsed
+

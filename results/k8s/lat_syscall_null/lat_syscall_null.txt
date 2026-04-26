@@ -1,40 +1,44 @@
-===== SYSTEM INFO (K8s) =====
-Thu Mar 26 07:28:13 PM IST 2026
-NAME                          READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
-lmbench-pod-20260326-192809   1/1     Running   0          4s    10.244.0.16   minikube   <none>           <none>
-============================
-
-Benchmark: lat_syscall
-Args: -P 1 -W 5 -N 50 null
+=== System & Config Info (K8s) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (taskset internal): 1
+Benchmark Command: lat_syscall -P 1 -W 5 -N 50 null
+==================================
 
 ===== RAW RESULTS =====
-Run 1:
-Simple syscall: 0.1838 microseconds
+Run 1: 0.2750
+Run 2: 0.2758
+Run 3: 0.2754
+Run 4: 0.2754
+Run 5: 0.2745
+Run 6: 0.2747
+Run 7: 0.2751
+Run 8: 0.2749
+Run 9: 0.2738
+Run 10: 0.2748
+Run 11: 0.2743
+Run 12: 0.2748
+Run 13: 0.2743
+Run 14: 0.2749
+Run 15: 0.2756
+Run 16: 0.2752
+Run 17: 0.2750
+Run 18: 0.2747
+Run 19: 0.2749
+Run 20: 0.2744
+Run 21: 0.2745
+Run 22: 0.2761
+Run 23: 0.2742
+Run 24: 0.2743
+Run 25: 0.2743
 
-Run 2:
-Simple syscall: 0.1826 microseconds
-
-Run 3:
-Simple syscall: 0.1827 microseconds
-
-Run 4:
-Simple syscall: 0.1826 microseconds
-
-Run 5:
-Simple syscall: 0.1844 microseconds
-
-Run 6:
-Simple syscall: 0.1851 microseconds
-
-Run 7:
-Simple syscall: 0.1836 microseconds
-
-Run 8:
-Simple syscall: 0.1835 microseconds
-
-Run 9:
-Simple syscall: 0.1829 microseconds
-
-Run 10:
-Simple syscall: 0.1841 microseconds
-
+===== STATISTICS =====
+Samples: 20
+Mean: .27474000000000000000
+Median: .27475000000000000000
+Variance: .00000026040000000000
+Standard Deviation: .00051029403288692294
+Min: 0.2738
+Max: 0.2761
+Variation (Range): .0023
+Coefficient of Variation (%): .18573707246375589200
+======================
