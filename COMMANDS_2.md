@@ -203,10 +203,10 @@ sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_ctx/perf.data ./lm
 sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_ctx -s 32 2 2>&1 | sudo tee ./results/host/lat_ctx/strace.txt
 
 echo "[INFO] Launching background process for bpftrace..."
-CPU_CORE=1 sudo ./host_perf.sh lat_ctx -P 1 -W 5 -N 100000 -s 32 2 > /dev/null 2>&1 &
+CPU_CORE=1 sudo ./host_perf.sh lat_ctx -P 1 -W 5 -N 100000 -s 32 2 -o /dev/null > /dev/null 2>&1 &
 sleep 2
-PID=$(pgrep -x lat_ctx | tail -n 1)
-sudo timeout 10s bpftrace -e "tracepoint:sched:sched_switch /pid == $PID/ { @counts[comm] = count(); }" | sudo tee ./results/host/lat_ctx/bpftrace.txt
+# Filtering by command name instead of PID to catch all child processes, and generating a histogram
+sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_read /comm == "lat_ctx"/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/host/lat_ctx/bpftrace.txt
 sudo pkill -9 -x lat_ctx 2>/dev/null || true
 echo "[INFO] Host profiling complete."
 ```
@@ -215,14 +215,15 @@ echo "[INFO] Host profiling complete."
 ```bash
 mkdir -p results/docker/lat_ctx
 echo "[INFO] Launching Docker benchmark in background..."
-CPU_CORE=1 sudo ./docker_perf.sh lat_ctx -P 1 -W 5 -N 100000 -s 32 2 > /dev/null 2>&1 &
+CPU_CORE=1 sudo ./docker_perf.sh lat_ctx -P 1 -W 5 -N 100000 -s 32 2 -o /dev/null > /dev/null 2>&1 &
 sleep 5
 PID=$(pgrep -x lat_ctx | tail -n 1)
 echo "[INFO] Attaching to Container PID: $PID"
 sudo perf stat -p $PID -o ./results/docker/lat_ctx/perf_stat.txt -- sleep 5
 sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_ctx/perf.data -- sleep 5
-sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/docker/lat_ctx/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:sched:sched_switch /pid == $PID/ { @counts[comm] = count(); }" | sudo tee ./results/docker/lat_ctx/bpftrace.txt
+sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_ctx/strace.txt
+# Using comm == "lat_ctx" for histogram
+sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_read /comm == "lat_ctx"/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_ctx/bpftrace.txt
 sudo pkill -9 -x lat_ctx 2>/dev/null || true
 echo "[INFO] Docker profiling complete."
 ```
@@ -231,14 +232,15 @@ echo "[INFO] Docker profiling complete."
 ```bash
 mkdir -p results/k8s/lat_ctx
 echo "[INFO] Launching K8s benchmark in background..."
-CPU_CORE=1 sudo ./k8s_perf.sh lat_ctx -P 1 -W 5 -N 100000 -s 32 2 > /dev/null 2>&1 &
+CPU_CORE=1 sudo ./k8s_perf.sh lat_ctx -P 1 -W 5 -N 100000 -s 32 2 -o /dev/null > /dev/null 2>&1 &
 sleep 15
 PID=$(pgrep -x lat_ctx | tail -n 1)
 echo "[INFO] Attaching to K8s PID: $PID"
 sudo perf stat -p $PID -o ./results/k8s/lat_ctx/perf_stat.txt -- sleep 5
 sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_ctx/perf.data -- sleep 5
-sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/k8s/lat_ctx/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:sched:sched_switch /pid == $PID/ { @counts[comm] = count(); }" | sudo tee ./results/k8s/lat_ctx/bpftrace.txt
+sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/k8s/lat_ctx/strace.txt
+# Using comm == "lat_ctx" for histogram
+sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_read /comm == "lat_ctx"/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/k8s/lat_ctx/bpftrace.txt
 sudo pkill -9 -x lat_ctx 2>/dev/null || true
 echo "[INFO] K8s profiling complete."
 ```
