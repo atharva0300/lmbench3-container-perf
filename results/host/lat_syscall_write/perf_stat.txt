@@ -1,0 +1,20 @@
+# started on Sun Apr 26 21:47:40 2026
+
+
+ Performance counter stats for './lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_syscall -P 1 -W 5 -N 1000 write':
+
+     5,942,173,080      task-clock                       #    1.000 CPUs utilized             
+                22      context-switches                 #    3.702 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+               117      page-faults                      #   19.690 /sec                      
+    23,115,484,401      instructions                     #    1.56  insn per cycle            
+    14,820,764,763      cycles                           #    2.494 GHz                       
+     5,493,732,079      branches                         #  924.532 M/sec                     
+         6,812,921      branch-misses                    #    0.12% of all branches           
+
+       5.942879079 seconds time elapsed
+
+       3.371813000 seconds user
+       2.571116000 seconds sys
+
+

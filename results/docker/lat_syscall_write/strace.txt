@@ -1,32 +1,9 @@
-strace: Process 15298 attached
-Simple write: 16.5766 microseconds
+strace: Process 113711 attached
+strace: Process 113711 detached
 % time     seconds  usecs/call     calls    errors syscall
 ------ ----------- ----------- --------- --------- ----------------
- 67.68    0.019215       19215         1           wait4
- 31.88    0.009051           2      3514           write
-  0.28    0.000080           0       278           getrusage
-  0.12    0.000034           2        17           getppid
-  0.03    0.000009           1         7           read
-  0.01    0.000004           0         6           pselect6
-  0.00    0.000000           0        15           close
-  0.00    0.000000           0         2           fstat
-  0.00    0.000000           0         8           mmap
-  0.00    0.000000           0         3           mprotect
-  0.00    0.000000           0         1           munmap
-  0.00    0.000000           0         3           brk
-  0.00    0.000000           0         8           rt_sigaction
-  0.00    0.000000           0         2           pread64
-  0.00    0.000000           0         1         1 access
-  0.00    0.000000           0         2           alarm
-  0.00    0.000000           0         1           clone
-  0.00    0.000000           0         1           execve
-  0.00    0.000000           0         1           arch_prctl
-  0.00    0.000000           0         1           set_tid_address
-  0.00    0.000000           0         3           openat
-  0.00    0.000000           0         2           set_robust_list
-  0.00    0.000000           0         4           pipe2
-  0.00    0.000000           0         1           prlimit64
-  0.00    0.000000           0         1           getrandom
-  0.00    0.000000           0         1           rseq
+ 98.89    0.678365           2    265542           write
+  0.78    0.005375           3      1716           getrusage
+  0.32    0.002214           2       858           getppid
 ------ ----------- ----------- --------- --------- ----------------
-100.00    0.028393           7      3884         1 total
+100.00    0.685954           2    268116           total
