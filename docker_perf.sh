@@ -59,9 +59,10 @@ do
         exit 1
     }
 
-    # ✅ UNIVERSAL EXTRACTION LOGIC
+    # ✅ BULLETPROOF EXTRACTION
     if [[ "$BENCH_NAME" == "lat_ctx" ]]; then
-        VAL=$(echo "$OUTPUT" | tail -n 1 | awk '{print $2}')
+        # Hunts strictly for the context switch format: "2 3.49"
+        VAL=$(echo "$OUTPUT" | awk '/^[0-9]+ [0-9]+\.[0-9]+/ {print $2}' | head -n 1)
     else
         VAL=$(echo "$OUTPUT" | awk '/microseconds/ {for(j=1;j<=NF;j++) if($j ~ /^[0-9]+\.[0-9]+$/) print $j}' | head -n 1)
     fi
