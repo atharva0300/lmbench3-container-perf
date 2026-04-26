@@ -1,69 +1,52 @@
 #!/bin/bash
-
 set -e
 
-# ==============================
-# HANDLE SUDO (FIX KUBECTL ISSUE)
-# ==============================
-
 if [ "$EUID" -eq 0 ]; then
-    if [ -z "$SUDO_USER" ]; then
-        echo "[ERROR] Cannot determine original user"
-        exit 1
-    fi
-
     export KUBECONFIG="/home/$SUDO_USER/.kube/config"
-    echo "[INFO] Running as root, using kubeconfig: $KUBECONFIG"
 fi
-
-# ==============================
-# CHECK KUBERNETES CLUSTER
-# ==============================
 
 if ! kubectl cluster-info > /dev/null 2>&1; then
-    echo "[ERROR] Kubernetes cluster not running"
-    echo "[INFO] Try: minikube start"
-    exit 1
-fi
-
-# ==============================
-# INPUT VALIDATION
-# ==============================
-
-if [ $# -lt 1 ]; then
-    echo "Usage: $0 <benchmark> [args...]"
+    echo "[ERROR] Kubernetes not running"
     exit 1
 fi
 
 BENCH_NAME=$1
 shift
-ARGS="$@"
 
-# ==============================
-# CONFIGURATION
-# ==============================
+CUSTOM_OUT=""
+ARGS=()
 
-OUTPUT_DIR="./results/k8s"
-RUNS=10
-CPU_CORE=${CPU_CORE:-1}
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -o|--output) CUSTOM_OUT="$2"; shift 2 ;;
+        *) ARGS+=("$1"); shift ;;
+    esac
+done
 
-TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
-OUT_FILE="$OUTPUT_DIR/${BENCH_NAME}_${TIMESTAMP}.txt"
+RUNS=25
+WARMUP=5
+CPU_CORE=${CPU_CORE:-1} 
 
-POD_NAME="lmbench-pod-$TIMESTAMP"
+POD_NAME="lmbench-$(date +%s)"
 
-HOST_LM_DIR="$(pwd)/lmbench-3.0-a9"
+if [ -n "$CUSTOM_OUT" ]; then
+    OUT_FILE="$CUSTOM_OUT"
+else
+    OUT_FILE="./results/k8s/${BENCH_NAME}.txt"
+fi
 
+mkdir -p "$(dirname "$OUT_FILE")"
+: > "$OUT_FILE"
 
-mkdir -p "$OUTPUT_DIR"
-
-echo "[INFO] Benchmark: $BENCH_NAME"
-echo "[INFO] Args: $ARGS"
-echo "[INFO] Output: $OUT_FILE"
-
-# ==============================
-# CREATE POD YAML
-# ==============================
+{
+    echo "=== System & Config Info (K8s) ==="
+    uname -a
+    echo "CPU_CORE Target (taskset internal): $CPU_CORE"
+    echo "Benchmark Command: $BENCH_NAME ${ARGS[*]}"
+    echo "=================================="
+    echo ""
+    echo "===== RAW RESULTS ====="
+} >> "$OUT_FILE"
 
 cat <<EOF > pod.yaml
 apiVersion: v1
@@ -72,10 +55,13 @@ metadata:
   name: $POD_NAME
 spec:
   restartPolicy: Never
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
   containers:
   - name: lmbench
-    image: ubuntu:20.04
-    command: ["sleep", "infinity"]
+    image: ubuntu:24.04
+    command: ["sleep","infinity"]
     resources:
       requests:
         cpu: "1"
@@ -83,75 +69,94 @@ spec:
         cpu: "1"
 EOF
 
-# ==============================
-# START POD
-# ==============================
-
-echo "[INFO] Creating pod..."
 kubectl apply -f pod.yaml --validate=false
-
-echo "[INFO] Waiting for pod to be ready..."
 kubectl wait --for=condition=Ready pod/$POD_NAME --timeout=60s
 
-echo "[INFO] Copying lmbench into pod..."
-kubectl cp "$HOST_LM_DIR" "$POD_NAME:/lmbench"
+kubectl cp "$(pwd)/lmbench-3.0-a9" "$POD_NAME:/lmbench"
 
-sleep 2
-
-echo "[INFO] Detecting lmbench path inside pod..."
-
-LM_PATH=$(kubectl exec $POD_NAME -- find /lmbench -type d -name "x86_64-linux-gnu" | head -n 1)
-
-
-if [ -z "$LM_PATH" ]; then
-    echo "[ERROR] Could not find lmbench binary path"
-    kubectl exec $POD_NAME -- ls -R /lmbench
-    exit 1
-fi
-
-echo "[INFO] Found lmbench path: $LM_PATH"
-
-# ==============================
-# SYSTEM INFO LOGGING
-# ==============================
-
-{
-echo "===== SYSTEM INFO (K8s) ====="
-date
-kubectl get pod $POD_NAME -o wide
-echo "============================"
-echo ""
-echo "Benchmark: $BENCH_NAME"
-echo "Args: $ARGS"
-echo ""
-} >> "$OUT_FILE"
-
-# ==============================
-# BENCHMARK RUN
-# ==============================
-
-echo "===== RAW RESULTS =====" >> "$OUT_FILE"
+VALUES=()
 
 for i in $(seq 1 $RUNS)
 do
-    echo "[INFO] Run $i"
+    OUTPUT=$(kubectl exec $POD_NAME -- taskset -c $CPU_CORE \
+        /lmbench/bin/x86_64-linux-gnu/$BENCH_NAME "${ARGS[@]}" 2>&1) || {
+        echo "[ERROR] K8s execution failed. Output:" | tee -a "$OUT_FILE"
+        echo "$OUTPUT" | tee -a "$OUT_FILE"
+        exit 1
+    }
 
-    echo "Run $i:" | tee -a "$OUT_FILE"
+    # ✅ UNIVERSAL EXTRACTION LOGIC
+    if [[ "$BENCH_NAME" == "lat_ctx" ]]; then
+        VAL=$(echo "$OUTPUT" | tail -n 1 | awk '{print $2}')
+    else
+        VAL=$(echo "$OUTPUT" | awk '/microseconds/ {for(j=1;j<=NF;j++) if($j ~ /^[0-9]+\.[0-9]+$/) print $j}' | head -n 1)
+    fi
 
-    kubectl exec $POD_NAME -- \
-        $LM_PATH/$BENCH_NAME $ARGS \
-        2>&1 | tee -a "$OUT_FILE"
+    echo "Run $i: $VAL" | tee -a "$OUT_FILE"
 
-    echo "" >> "$OUT_FILE"
+    if [[ -n "$VAL" && $i -gt $WARMUP ]]; then
+        VALUES+=("$VAL")
+    fi
+    sleep 0.2
 done
 
-# ==============================
-# CLEANUP
-# ==============================
+kubectl delete pod $POD_NAME
+rm pod.yaml
 
-echo "[INFO] Deleting pod..."
-kubectl delete pod $POD_NAME --ignore-not-found
+COUNT=${#VALUES[@]}
 
-rm -f pod.yaml
+if [ "$COUNT" -eq 0 ]; then
+    echo "[ERROR] No values captured"
+    exit 1
+fi
+
+SUM=0
+MIN=${VALUES[0]}
+MAX=${VALUES[0]}
+
+for v in "${VALUES[@]}"; do
+    SUM=$(echo "$SUM + $v" | bc -l)
+    if (( $(echo "$v < $MIN" | bc -l) )); then MIN=$v; fi
+    if (( $(echo "$v > $MAX" | bc -l) )); then MAX=$v; fi
+done
+
+MEAN=$(echo "$SUM / $COUNT" | bc -l)
+
+VAR_SUM=0
+for v in "${VALUES[@]}"; do
+    DIFF=$(echo "$v - $MEAN" | bc -l)
+    SQ=$(echo "$DIFF * $DIFF" | bc -l)
+    VAR_SUM=$(echo "$VAR_SUM + $SQ" | bc -l)
+done
+
+VARIANCE=$(echo "$VAR_SUM / $COUNT" | bc -l)
+STD_DEV=$(echo "sqrt($VARIANCE)" | bc -l)
+VARIATION=$(echo "$MAX - $MIN" | bc -l)
+COV=$(echo "($STD_DEV / $MEAN) * 100" | bc -l)
+
+SORTED=($(printf '%s\n' "${VALUES[@]}" | sort -n))
+MID=$((COUNT / 2))
+
+if (( COUNT % 2 == 0 )); then
+    MEDIAN=$(echo "(${SORTED[$MID-1]} + ${SORTED[$MID]}) / 2" | bc -l)
+else
+    MEDIAN=${SORTED[$MID]}
+fi
+
+{
+echo ""
+echo "===== STATISTICS ====="
+echo "Samples: $COUNT"
+echo "Mean: $MEAN"
+echo "Median: $MEDIAN"
+echo "Variance: $VARIANCE"
+echo "Standard Deviation: $STD_DEV"
+echo "Min: $MIN"
+echo "Max: $MAX"
+echo "Variation (Range): $VARIATION"
+echo "Coefficient of Variation (%): $COV"
+echo "======================"
+} | tee -a "$OUT_FILE"
 
 echo "[INFO] Completed $BENCH_NAME (K8s)"
+echo "[INFO] Mean: $MEAN | Median: $MEDIAN | StdDev: $STD_DEV | COV: $COV%"
