@@ -1,0 +1,16 @@
+# started on Sun Apr 26 21:30:54 2026
+
+
+ Performance counter stats for process id '101374':
+
+     4,999,247,865      task-clock                       #    1.000 CPUs utilized             
+                 8      context-switches                 #    1.600 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 3      page-faults                      #    0.600 /sec                      
+    19,615,382,543      instructions                     #    1.57  insn per cycle            
+    12,468,776,739      cycles                           #    2.494 GHz                       
+     4,976,265,574      branches                         #  995.403 M/sec                     
+           165,718      branch-misses                    #    0.00% of all branches           
+
+       5.001197484 seconds time elapsed
+
