@@ -1,0 +1,20 @@
+# started on Sun Apr 26 23:41:56 2026
+
+
+ Performance counter stats for './lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_proc -P 1 -W 5 -N 1000 fork':
+
+     4,403,749,436      task-clock                       #    0.745 CPUs utilized             
+            28,321      context-switches                 #    6.431 K/sec                     
+                 0      cpu-migrations                   #    0.000 /sec                      
+           795,080      page-faults                      #  180.546 K/sec                     
+    11,330,154,033      instructions                     #    1.06  insn per cycle            
+    10,668,234,614      cycles                           #    2.423 GHz                       
+     2,064,475,836      branches                         #  468.800 M/sec                     
+        10,285,407      branch-misses                    #    0.50% of all branches           
+
+       5.914071303 seconds time elapsed
+
+       3.385741000 seconds user
+       2.528222000 seconds sys
+
+

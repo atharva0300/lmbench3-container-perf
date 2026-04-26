@@ -1,0 +1,32 @@
+=== System & Config Info (Docker) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (Docker cpuset): 1
+Benchmark Command: lat_proc -P 1 -W 5 -N 100000 fork
+=====================================
+
+===== RAW RESULTS =====
+Run 1: 
+Run 2: 
+Run 3: 
+Run 4: 
+Run 5: 
+Run 6: 
+Run 7: 
+Run 8: 
+Run 9: 
+Run 10: 
+Run 11: 
+Run 12: 
+Run 13: 
+Run 14: 
+Run 15: 
+Run 16: 
+Run 17: 
+Run 18: 
+Run 19: 
+Run 20: 
+Run 21: 
+Run 22: 
+Run 23: 
+Run 24: 
+Run 25: 

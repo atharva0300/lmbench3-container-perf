@@ -1,0 +1,7 @@
+=== System & Config Info (Host) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (taskset): 1
+Benchmark Command: lat_proc -P 1 -W 5 -N 100000 fork
+===================================
+
+===== RAW RESULTS =====
