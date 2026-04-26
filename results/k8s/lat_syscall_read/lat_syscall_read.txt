@@ -1,40 +1,44 @@
-===== SYSTEM INFO (K8s) =====
-Thu Mar 26 07:35:27 PM IST 2026
-NAME                          READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
-lmbench-pod-20260326-193524   1/1     Running   0          3s    10.244.0.17   minikube   <none>           <none>
-============================
-
-Benchmark: lat_syscall
-Args: -P 1 -W 5 -N 50 read
+=== System & Config Info (K8s) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (taskset internal): 1
+Benchmark Command: lat_syscall -P 1 -W 5 -N 50 read
+==================================
 
 ===== RAW RESULTS =====
-Run 1:
-Simple read: 0.2554 microseconds
+Run 1: 0.3494
+Run 2: 0.3505
+Run 3: 0.3517
+Run 4: 0.3487
+Run 5: 0.3494
+Run 6: 0.3476
+Run 7: 0.3555
+Run 8: 0.3513
+Run 9: 0.3480
+Run 10: 0.3510
+Run 11: 0.3509
+Run 12: 0.3501
+Run 13: 0.3508
+Run 14: 0.3522
+Run 15: 0.3491
+Run 16: 0.3492
+Run 17: 0.3496
+Run 18: 0.3551
+Run 19: 0.3514
+Run 20: 0.3501
+Run 21: 0.3460
+Run 22: 0.3472
+Run 23: 0.3548
+Run 24: 0.3505
+Run 25: 0.3493
 
-Run 2:
-Simple read: 0.2540 microseconds
-
-Run 3:
-Simple read: 0.2530 microseconds
-
-Run 4:
-Simple read: 0.2535 microseconds
-
-Run 5:
-Simple read: 0.2537 microseconds
-
-Run 6:
-Simple read: 0.2528 microseconds
-
-Run 7:
-Simple read: 0.2537 microseconds
-
-Run 8:
-Simple read: 0.2534 microseconds
-
-Run 9:
-Simple read: 0.2538 microseconds
-
-Run 10:
-Simple read: 0.2529 microseconds
-
+===== STATISTICS =====
+Samples: 20
+Mean: .35048500000000000000
+Median: .35030000000000000000
+Variance: .00000607527500000000
+Standard Deviation: .00246480729469871538
+Min: 0.3460
+Max: 0.3555
+Variation (Range): .0095
+Coefficient of Variation (%): .70325614354357971900
+======================
