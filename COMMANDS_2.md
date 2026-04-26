@@ -310,7 +310,7 @@ CPU_CORE=1 sudo ./docker_perf.sh lat_proc -P 1 -W 5 -N 10000000 fork -o /dev/nul
 echo "[INFO] Hunting for Container PID..."
 PID=""
 for i in {1..20}; do
-    PID=$(pgrep -x lat_proc | tail -n 1)
+    PID=$(pgrep -n -x lat_proc) # FIX: -n grabs only the newest PID
     if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
     sleep 1
 done
@@ -331,14 +331,24 @@ echo "[INFO] Docker profiling complete."
 ```bash
 mkdir -p results/k8s/lat_proc
 echo "[INFO] Launching K8s benchmark in background..."
-CPU_CORE=1 sudo ./k8s_perf.sh lat_proc -P 1 -W 5 -N 100000 fork > /dev/null 2>&1 &
-sleep 15
-PID=$(pgrep -x lat_proc | tail -n 1)
-echo "[INFO] Attaching to K8s PID: $PID"
-sudo perf stat -p $PID -o ./results/k8s/lat_proc/perf_stat.txt -- sleep 5
-sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_proc/perf.data -- sleep 5
-sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/k8s/lat_proc/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_clone /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_clone /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/k8s/lat_proc/bpftrace.txt
+CPU_CORE=1 sudo ./k8s_perf.sh lat_proc -P 1 -W 5 -N 10000000 fork -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for K8s PID..."
+PID=""
+for i in {1..30}; do
+    PID=$(pgrep -n -x lat_proc) # FIX: -n grabs only the newest PID
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/k8s/lat_proc/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_proc/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/k8s/lat_proc/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_clone { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_clone /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/k8s/lat_proc/bpftrace.txt
+fi
 sudo pkill -9 -x lat_proc 2>/dev/null || true
 echo "[INFO] K8s profiling complete."
 ```
@@ -348,6 +358,15 @@ echo "[INFO] K8s profiling complete."
 CPU_CORE=1 sudo ./host_perf.sh lat_proc -P 1 -W 5 -N 50 fork -o results/host/lat_proc/lat_proc.txt
 CPU_CORE=1 sudo ./docker_perf.sh lat_proc -P 1 -W 5 -N 50 fork -o results/docker/lat_proc/lat_proc.txt
 CPU_CORE=1 sudo ./k8s_perf.sh lat_proc -P 1 -W 5 -N 50 fork -o results/k8s/lat_proc/lat_proc.txt
+```
+
+#### Cleanup Commands to nuke any stuck zombie processes or lingering background jobs
+```bash
+sudo pkill -9 -f lat_proc
+sudo pkill -9 -f host_perf.sh
+sudo pkill -9 -f docker_perf.sh
+sudo pkill -9 -f k8s_perf.sh
+kubectl delete pods --all --force --grace-period=0
 ```
 
 ---
