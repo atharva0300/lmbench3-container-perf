@@ -305,14 +305,24 @@ echo "[INFO] Host profiling complete."
 ```bash
 mkdir -p results/docker/lat_proc
 echo "[INFO] Launching Docker benchmark in background..."
-CPU_CORE=1 sudo ./docker_perf.sh lat_proc -P 1 -W 5 -N 100000 fork > /dev/null 2>&1 &
-sleep 5
-PID=$(pgrep -x lat_proc | tail -n 1)
-echo "[INFO] Attaching to Container PID: $PID"
-sudo perf stat -p $PID -o ./results/docker/lat_proc/perf_stat.txt -- sleep 5
-sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_proc/perf.data -- sleep 5
-sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/docker/lat_proc/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_clone /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_clone /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/docker/lat_proc/bpftrace.txt
+CPU_CORE=1 sudo ./docker_perf.sh lat_proc -P 1 -W 5 -N 10000000 fork -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Container PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -x lat_proc | tail -n 1)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/docker/lat_proc/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_proc/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_proc/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_clone { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_clone /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_proc/bpftrace.txt
+fi
 sudo pkill -9 -x lat_proc 2>/dev/null || true
 echo "[INFO] Docker profiling complete."
 ```

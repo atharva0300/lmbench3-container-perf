@@ -47,8 +47,10 @@ VALUES=()
 
 for i in $(seq 1 $RUNS)
 do
+    # ✅ FIX: Added --privileged to bypass AppArmor fork restrictions
     OUTPUT=$(docker run --rm \
         --cpuset-cpus="$CPU_CORE" \
+        --privileged \
         --pids-limit -1 \
         --security-opt seccomp=unconfined \
         -v "$(pwd)/lmbench-3.0-a9":/lmbench \
@@ -61,7 +63,6 @@ do
 
     # ✅ BULLETPROOF EXTRACTION
     if [[ "$BENCH_NAME" == "lat_ctx" ]]; then
-        # Hunts strictly for the context switch format: "2 3.49"
         VAL=$(echo "$OUTPUT" | awk '/^[0-9]+ [0-9]+\.[0-9]+/ {print $2}' | head -n 1)
     else
         VAL=$(echo "$OUTPUT" | awk '/microseconds/ {for(j=1;j<=NF;j++) if($j ~ /^[0-9]+\.[0-9]+$/) print $j}' | head -n 1)
