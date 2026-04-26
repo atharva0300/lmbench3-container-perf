@@ -367,7 +367,7 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_proc -P 1 -W 5 -N 50 fork -o results/k8s/lat_p
 
 #### Cleanup Commands to nuke any stuck zombie processes or lingering background jobs
 ```bash
-sudo pkill -9 -f lat_proc
+ps aux | grep lat_proc
 sudo pkill -9 -f host_perf.sh
 sudo pkill -9 -f docker_perf.sh
 sudo pkill -9 -f k8s_perf.sh
