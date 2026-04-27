@@ -408,58 +408,92 @@ kubectl delete pods --all --force --grace-period=0
 #### Phase 1: Profiling
 **Host:**
 ```bash
+sudo -v
 mkdir -p results/host/lat_pagefault
 echo "[INFO] Running perf stat, perf record, and strace..."
-sudo taskset -c 1 perf stat -o ./results/host/lat_pagefault/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault -P 1 -W 5 -N 1000 /tmp/test
-sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_pagefault/perf.data ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault -P 1 -W 5 -N 1000 /tmp/test
-sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault /tmp/test 2>&1 | sudo tee ./results/host/lat_pagefault/strace.txt
+sudo taskset -c 1 perf stat -o ./results/host/lat_pagefault/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault -P 1 -W 5 -N 1000 ./lmbench-3.0-a9/Makefile
+sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_pagefault/perf.data ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault -P 1 -W 5 -N 1000 ./lmbench-3.0-a9/Makefile
+sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pagefault ./lmbench-3.0-a9/Makefile 2>&1 | sudo tee ./results/host/lat_pagefault/strace.txt
 
 echo "[INFO] Launching background process for bpftrace..."
-CPU_CORE=1 sudo ./host_perf.sh lat_pagefault -P 1 -W 5 -N 100000 /tmp/test > /dev/null 2>&1 &
-sleep 2
-PID=$(pgrep -x lat_pagefault | tail -n 1)
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_mmap /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_pagefault/bpftrace.txt
+CPU_CORE=1 sudo ./host_perf.sh lat_pagefault -P 1 -W 5 -N 10000000 ./lmbench-3.0-a9/Makefile -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Host PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -n -x lat_pagefault)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_mmap { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/host/lat_pagefault/bpftrace.txt
+fi
 sudo pkill -9 -x lat_pagefault 2>/dev/null || true
 echo "[INFO] Host profiling complete."
 ```
 
 **Docker:**
 ```bash
+sudo -v
 mkdir -p results/docker/lat_pagefault
 echo "[INFO] Launching Docker benchmark in background..."
-CPU_CORE=1 sudo ./docker_perf.sh lat_pagefault -P 1 -W 5 -N 100000 /tmp/test > /dev/null 2>&1 &
-sleep 5
-PID=$(pgrep -x lat_pagefault | tail -n 1)
-echo "[INFO] Attaching to Container PID: $PID"
-sudo perf stat -p $PID -o ./results/docker/lat_pagefault/perf_stat.txt -- sleep 5
-sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_pagefault/perf.data -- sleep 5
-sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/docker/lat_pagefault/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_mmap /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/docker/lat_pagefault/bpftrace.txt
+CPU_CORE=1 sudo ./docker_perf.sh lat_pagefault -P 1 -W 5 -N 10000000 /lmbench/Makefile -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Container PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -n -x lat_pagefault)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/docker/lat_pagefault/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_pagefault/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_pagefault/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_mmap { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_pagefault/bpftrace.txt
+fi
 sudo pkill -9 -x lat_pagefault 2>/dev/null || true
 echo "[INFO] Docker profiling complete."
 ```
 
 **Kubernetes:**
 ```bash
+sudo -v
 mkdir -p results/k8s/lat_pagefault
 echo "[INFO] Launching K8s benchmark in background..."
-CPU_CORE=1 sudo ./k8s_perf.sh lat_pagefault -P 1 -W 5 -N 100000 /tmp/test > /dev/null 2>&1 &
-sleep 15
-PID=$(pgrep -x lat_pagefault | tail -n 1)
-echo "[INFO] Attaching to K8s PID: $PID"
-sudo perf stat -p $PID -o ./results/k8s/lat_pagefault/perf_stat.txt -- sleep 5
-sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_pagefault/perf.data -- sleep 5
-sudo timeout 5s strace -c -p $PID 2>&1 | sudo tee ./results/k8s/lat_pagefault/strace.txt
-sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_mmap /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/k8s/lat_pagefault/bpftrace.txt
+CPU_CORE=1 sudo ./k8s_perf.sh lat_pagefault -P 1 -W 5 -N 10000000 /lmbench/Makefile -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for K8s PID..."
+PID=""
+for i in {1..30}; do
+    PID=$(pgrep -n -x lat_pagefault)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/k8s/lat_pagefault/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_pagefault/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/k8s/lat_pagefault/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_mmap { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_mmap /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/k8s/lat_pagefault/bpftrace.txt
+fi
 sudo pkill -9 -x lat_pagefault 2>/dev/null || true
 echo "[INFO] K8s profiling complete."
 ```
 
 #### Phase 2: Official Benchmarks
 ```bash
-CPU_CORE=1 sudo ./host_perf.sh lat_pagefault -P 1 -W 5 -N 50 /tmp/test -o results/host/lat_pagefault/lat_pagefault.txt
-CPU_CORE=1 sudo ./docker_perf.sh lat_pagefault -P 1 -W 5 -N 50 /tmp/test -o results/docker/lat_pagefault/lat_pagefault.txt
-CPU_CORE=1 sudo ./k8s_perf.sh lat_pagefault -P 1 -W 5 -N 50 /tmp/test -o results/k8s/lat_pagefault/lat_pagefault.txt
+CPU_CORE=1 sudo ./host_perf.sh lat_pagefault -P 1 -W 5 -N 50 ./lmbench-3.0-a9/Makefile -o results/host/lat_pagefault/lat_pagefault.txt
+CPU_CORE=1 sudo ./docker_perf.sh lat_pagefault -P 1 -W 5 -N 50 /lmbench/Makefile -o results/docker/lat_pagefault/lat_pagefault.txt
+CPU_CORE=1 sudo ./k8s_perf.sh lat_pagefault -P 1 -W 5 -N 50 /lmbench/Makefile -o results/k8s/lat_pagefault/lat_pagefault.txt
 ```
 
 ---
