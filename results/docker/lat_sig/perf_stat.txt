@@ -1,0 +1,16 @@
+# started on Mon Apr 27 16:21:08 2026
+
+
+ Performance counter stats for process id '19469':
+
+     5,000,867,766      task-clock                       #    1.000 CPUs utilized             
+                10      context-switches                 #    2.000 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 3      page-faults                      #    0.600 /sec                      
+    20,303,906,956      instructions                     #    1.63  insn per cycle            
+    12,472,863,756      cycles                           #    2.494 GHz                       
+     4,482,277,714      branches                         #  896.300 M/sec                     
+        11,229,739      branch-misses                    #    0.25% of all branches           
+
+       5.001140274 seconds time elapsed
+
