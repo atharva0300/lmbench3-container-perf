@@ -1,0 +1,7 @@
+strace: Process 39264 attached
+strace: Process 39264 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.028679           8      3321           fcntl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.028679           8      3321           total

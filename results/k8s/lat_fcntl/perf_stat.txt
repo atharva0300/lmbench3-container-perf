@@ -1,0 +1,16 @@
+# started on Mon Apr 27 17:11:53 2026
+
+
+ Performance counter stats for process id '43726':
+
+     1,673,723,005      task-clock                       #    0.335 CPUs utilized             
+           227,775      context-switches                 #  136.089 K/sec                     
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 0      page-faults                      #    0.000 /sec                      
+     4,557,250,277      instructions                     #    1.81  insn per cycle            
+     2,518,111,599      cycles                           #    1.504 GHz                       
+       859,968,151      branches                         #  513.806 M/sec                     
+         5,701,049      branch-misses                    #    0.66% of all branches           
+
+       5.001209224 seconds time elapsed
+

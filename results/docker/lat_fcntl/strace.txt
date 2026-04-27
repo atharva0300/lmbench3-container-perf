@@ -1,0 +1,7 @@
+strace: Process 40304 attached
+strace: Process 40304 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.023555           7      3340           fcntl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.023555           7      3340           total
