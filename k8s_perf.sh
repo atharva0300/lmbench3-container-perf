@@ -27,10 +27,12 @@ RUNS=25
 WARMUP=5
 CPU_CORE=${CPU_CORE:-1} 
 
-POD_NAME="lmbench-$(date +%s)"
+# ✅ FIX: Use a randomized, unique name for both the Pod AND the YAML file
+POD_NAME="lmbench-$(date +%s)-$RANDOM"
+YAML_FILE="pod-${POD_NAME}.yaml"
 
-# ✅ FIX: Guaranteed cleanup. This ensures the pod is deleted even if the script crashes.
-trap 'kubectl delete pod $POD_NAME --force --grace-period=0 2>/dev/null || true; rm -f pod.yaml 2>/dev/null || true' EXIT
+# ✅ FIX: The trap now deletes its own unique file, preventing race conditions
+trap 'kubectl delete pod $POD_NAME --force --grace-period=0 2>/dev/null || true; rm -f $YAML_FILE 2>/dev/null || true' EXIT
 
 if [ -n "$CUSTOM_OUT" ]; then
     OUT_FILE="$CUSTOM_OUT"
@@ -51,7 +53,7 @@ mkdir -p "$(dirname "$OUT_FILE")"
     echo "===== RAW RESULTS ====="
 } >> "$OUT_FILE"
 
-cat <<EOF > pod.yaml
+cat <<EOF > $YAML_FILE
 apiVersion: v1
 kind: Pod
 metadata:
@@ -72,7 +74,7 @@ spec:
         cpu: "1"
 EOF
 
-kubectl apply -f pod.yaml --validate=false
+kubectl apply -f $YAML_FILE --validate=false
 kubectl wait --for=condition=Ready pod/$POD_NAME --timeout=60s
 
 kubectl cp "$(pwd)/lmbench-3.0-a9" "$POD_NAME:/lmbench"
