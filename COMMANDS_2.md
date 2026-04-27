@@ -829,4 +829,68 @@ echo "[INFO] K8s profiling complete."
 CPU_CORE=1 sudo ./k8s_perf.sh lat_sig -P 1 -W 5 -N 50 catch -o results/k8s/lat_sig/lat_sig.txt
 ```
 
+#### 11. Metric: `lat_fcntl`
+
+**Host***
+```bash
+sudo -v
+mkdir -p results/host/lat_fcntl
+echo "[INFO] Running Phase 1: Profiling..."
+sudo taskset -c 1 perf stat -o ./results/host/lat_fcntl/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_fcntl -P 1 -W 5 -N 1000
+sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_fcntl/perf.data ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_fcntl -P 1 -W 5 -N 1000
+sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_fcntl -P 1 -W 5 -N 1000 2>&1 | sudo tee ./results/host/lat_fcntl/strace.txt
+
+CPU_CORE=1 sudo ./host_perf.sh lat_fcntl -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
+sleep 2
+PID=$(pgrep -n -x lat_fcntl)
+if [ -n "$PID" ]; then
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_fcntl { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/host/lat_fcntl/bpftrace.txt
+fi
+sudo pkill -9 -x lat_fcntl 2>/dev/null || true
+
+echo "[INFO] Running Phase 2: Benchmarking..."
+CPU_CORE=1 sudo ./host_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/host/lat_fcntl/lat_fcntl.txt
+```
+
+**Docker**
+```bash 
+sudo -v
+mkdir -p results/docker/lat_fcntl
+echo "[INFO] Running Phase 1: Profiling..."
+CPU_CORE=1 sudo ./docker_perf.sh lat_fcntl -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
+sleep 5
+PID=$(pgrep -n -x lat_fcntl)
+if [ -n "$PID" ]; then
+    sudo perf stat -p $PID -o ./results/docker/lat_fcntl/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_fcntl/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_fcntl/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_fcntl { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_fcntl/bpftrace.txt
+fi
+sudo pkill -9 -x lat_fcntl 2>/dev/null || true
+
+echo "[INFO] Running Phase 2: Benchmarking..."
+CPU_CORE=1 sudo ./docker_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/docker/lat_fcntl/lat_fcntl.txt
+```
+
+**Kubernetes**
+```bash
+sudo -v
+mkdir -p results/k8s/lat_fcntl
+echo "[INFO] Running Phase 1: Profiling..."
+CPU_CORE=1 sudo ./k8s_perf.sh lat_fcntl -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
+sleep 5
+PID=$(pgrep -n -x lat_fcntl)
+if [ -n "$PID" ]; then
+    sudo perf stat -p $PID -o ./results/k8s/lat_fcntl/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_fcntl/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/k8s/lat_fcntl/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_fcntl { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/k8s/lat_fcntl/bpftrace.txt
+fi
+sudo pkill -9 -x lat_fcntl 2>/dev/null || true
+
+echo "[INFO] Running Phase 2: Benchmarking..."
+CPU_CORE=1 sudo ./k8s_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/k8s/lat_fcntl/lat_fcntl.txt
+```
+
+
 
