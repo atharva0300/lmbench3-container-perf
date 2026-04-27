@@ -1,0 +1,10 @@
+strace: Process 25342 attached
+strace: Process 25342 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 98.38    0.941351           4    218886           kill
+  0.87    0.008321           4      1732           getrusage
+  0.38    0.003647           4       866           getppid
+  0.37    0.003557           4       866           getpid
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.956876           4    222350           total

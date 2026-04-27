@@ -1,0 +1,16 @@
+# started on Mon Apr 27 16:25:47 2026
+
+
+ Performance counter stats for process id '25342':
+
+     4,998,666,727      task-clock                       #    0.999 CPUs utilized             
+                10      context-switches                 #    2.001 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 3      page-faults                      #    0.600 /sec                      
+    20,295,978,652      instructions                     #    1.63  insn per cycle            
+    12,467,370,758      cycles                           #    2.494 GHz                       
+     4,352,942,949      branches                         #  870.821 M/sec                     
+        10,372,595      branch-misses                    #    0.24% of all branches           
+
+       5.001217013 seconds time elapsed
+

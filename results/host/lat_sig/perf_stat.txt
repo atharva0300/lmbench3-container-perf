@@ -1,0 +1,20 @@
+# started on Mon Apr 27 16:19:30 2026
+
+
+ Performance counter stats for './lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_sig -P 1 -W 5 -N 1000 catch':
+
+    11,261,062,256      task-clock                       #    1.000 CPUs utilized             
+                39      context-switches                 #    3.463 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+               171      page-faults                      #   15.185 /sec                      
+    39,595,775,504      instructions                     #    1.41  insn per cycle            
+    28,087,031,133      cycles                           #    2.494 GHz                       
+     8,349,888,158      branches                         #  741.483 M/sec                     
+        21,887,640      branch-misses                    #    0.26% of all branches           
+
+      11.262385102 seconds time elapsed
+
+       3.750802000 seconds user
+       7.511235000 seconds sys
+
+
