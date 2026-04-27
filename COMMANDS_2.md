@@ -635,3 +635,198 @@ CPU_CORE=1 sudo ./host_perf.sh lat_udp -P 1 -W 5 -N 50 localhost -o results/host
 CPU_CORE=1 sudo ./docker_perf.sh lat_udp -P 1 -W 5 -N 50 $HOST_IP -o results/docker/lat_udp/lat_udp.txt
 CPU_CORE=1 sudo ./k8s_perf.sh lat_udp -P 1 -W 5 -N 50 $HOST_IP -o results/k8s/lat_udp/lat_udp.txt
 ```
+
+
+#### 9. Metric: `lat_pipe`
+
+#### Phase 1: Profiling
+
+**Host**
+```bash
+sudo -v
+mkdir -p results/host/lat_pipe
+echo "[INFO] Running perf stat, perf record, and strace..."
+sudo taskset -c 1 perf stat -o ./results/host/lat_pipe/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pipe -P 1 -W 5 -N 1000
+sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_pipe/perf.data ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pipe -P 1 -W 5 -N 1000
+sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_pipe 2>&1 | sudo tee ./results/host/lat_pipe/strace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_pipe -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Host PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -n -x lat_pipe)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_read { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/host/lat_pipe/bpftrace.txt
+fi
+sudo pkill -9 -x lat_pipe 2>/dev/null || true
+echo "[INFO] Host profiling complete."
+
+# Phase 2: Benchmark
+CPU_CORE=1 sudo ./host_perf.sh lat_pipe -P 1 -W 5 -N 50 -o results/host/lat_pipe/lat_pipe.txt
+```
+
+
+**Docker**
+```bash
+sudo -v
+mkdir -p results/docker/lat_pipe
+echo "[INFO] Launching Docker benchmark in background..."
+CPU_CORE=1 sudo ./docker_perf.sh lat_pipe -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Container PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -n -x lat_pipe)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/docker/lat_pipe/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_pipe/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_pipe/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_read { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_pipe/bpftrace.txt
+fi
+sudo pkill -9 -x lat_pipe 2>/dev/null || true
+echo "[INFO] Docker profiling complete."
+
+# Phase 2: Benchmark
+CPU_CORE=1 sudo ./docker_perf.sh lat_pipe -P 1 -W 5 -N 50 -o results/docker/lat_pipe/lat_pipe.txt
+```
+
+**Kubernetes**
+```bash
+sudo -v
+mkdir -p results/k8s/lat_pipe
+echo "[INFO] Launching K8s benchmark in background..."
+CPU_CORE=1 sudo ./k8s_perf.sh lat_pipe -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for K8s PID..."
+PID=""
+for i in {1..30}; do
+    PID=$(pgrep -n -x lat_pipe)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/k8s/lat_pipe/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_pipe/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/k8s/lat_pipe/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_read { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/k8s/lat_pipe/bpftrace.txt
+fi
+sudo pkill -9 -x lat_pipe 2>/dev/null || true
+echo "[INFO] K8s profiling complete."
+
+# Phase 2: Benchmark
+CPU_CORE=1 sudo ./k8s_perf.sh lat_pipe -P 1 -W 5 -N 50 -o results/k8s/lat_pipe/lat_pipe.txt
+```
+
+
+#### 10. Metric: `lat_sig`
+
+**Host**
+```bash
+sudo -v
+mkdir -p results/host/lat_sig
+echo "[INFO] Running perf stat, perf record, and strace..."
+sudo taskset -c 1 perf stat -o ./results/host/lat_sig/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_sig -P 1 -W 5 -N 1000 catch
+sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_sig/perf.data ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_sig -P 1 -W 5 -N 1000 catch
+sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_sig catch 2>&1 | sudo tee ./results/host/lat_sig/strace.txt
+
+echo "[INFO] Launching background process for bpftrace..."
+CPU_CORE=1 sudo ./host_perf.sh lat_sig -P 1 -W 5 -N 10000000 catch -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Host PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -n -x lat_sig)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_kill { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_kill /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/host/lat_sig/bpftrace.txt
+fi
+sudo pkill -9 -x lat_sig 2>/dev/null || true
+echo "[INFO] Host profiling complete."
+
+# Phase 2: Benchmark
+CPU_CORE=1 sudo ./host_perf.sh lat_sig -P 1 -W 5 -N 50 catch -o results/host/lat_sig/lat_sig.txt
+```
+
+**Docker**
+```bash
+sudo -v
+mkdir -p results/docker/lat_sig
+echo "[INFO] Launching Docker benchmark in background..."
+CPU_CORE=1 sudo ./docker_perf.sh lat_sig -P 1 -W 5 -N 10000000 catch -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Container PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -n -x lat_sig)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/docker/lat_sig/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_sig/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_sig/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_kill { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_kill /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_sig/bpftrace.txt
+fi
+sudo pkill -9 -x lat_sig 2>/dev/null || true
+echo "[INFO] Docker profiling complete."
+
+# Phase 2: Benchmark
+CPU_CORE=1 sudo ./docker_perf.sh lat_sig -P 1 -W 5 -N 50 catch -o results/docker/lat_sig/lat_sig.txt
+```
+
+**Kubernetes**
+```bash
+sudo -v
+mkdir -p results/k8s/lat_sig
+echo "[INFO] Launching K8s benchmark in background..."
+CPU_CORE=1 sudo ./k8s_perf.sh lat_sig -P 1 -W 5 -N 10000000 catch -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for K8s PID..."
+PID=""
+for i in {1..30}; do
+    PID=$(pgrep -n -x lat_sig)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/k8s/lat_sig/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_sig/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/k8s/lat_sig/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_kill { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_kill /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/k8s/lat_sig/bpftrace.txt
+fi
+sudo pkill -9 -x lat_sig 2>/dev/null || true
+echo "[INFO] K8s profiling complete."
+
+# Phase 2: Benchmark
+CPU_CORE=1 sudo ./k8s_perf.sh lat_sig -P 1 -W 5 -N 50 catch -o results/k8s/lat_sig/lat_sig.txt
+```
+
+
