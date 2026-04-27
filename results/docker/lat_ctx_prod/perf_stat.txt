@@ -1,0 +1,16 @@
+# started on Mon Apr 27 13:47:00 2026
+
+
+ Performance counter stats for process id '33977':
+
+     4,996,914,260      task-clock                       #    0.999 CPUs utilized             
+                48      context-switches                 #    9.606 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 3      page-faults                      #    0.600 /sec                      
+    17,649,791,249      instructions                     #    1.42  insn per cycle            
+    12,462,537,462      cycles                           #    2.494 GHz                       
+     1,906,784,545      branches                         #  381.592 M/sec                     
+         5,670,074      branch-misses                    #    0.30% of all branches           
+
+       5.001274328 seconds time elapsed
+
