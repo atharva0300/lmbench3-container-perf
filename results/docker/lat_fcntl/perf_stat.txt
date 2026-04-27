@@ -1,0 +1,16 @@
+# started on Mon Apr 27 17:10:29 2026
+
+
+ Performance counter stats for process id '40304':
+
+     1,540,892,247      task-clock                       #    0.308 CPUs utilized             
+           246,291      context-switches                 #  159.837 K/sec                     
+                 0      cpu-migrations                   #    0.000 /sec                      
+                 0      page-faults                      #    0.000 /sec                      
+     3,367,827,179      instructions                     #    1.63  insn per cycle            
+     2,065,385,331      cycles                           #    1.340 GHz                       
+       653,128,001      branches                         #  423.864 M/sec                     
+         4,893,219      branch-misses                    #    0.75% of all branches           
+
+       5.001214926 seconds time elapsed
+
