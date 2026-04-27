@@ -835,20 +835,24 @@ CPU_CORE=1 sudo ./k8s_perf.sh lat_sig -P 1 -W 5 -N 50 catch -o results/k8s/lat_s
 ```bash
 sudo -v
 mkdir -p results/host/lat_fcntl
-echo "[INFO] Running Phase 1: Profiling..."
-sudo taskset -c 1 perf stat -o ./results/host/lat_fcntl/perf_stat.txt ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_fcntl -P 1 -W 5 -N 1000
-sudo taskset -c 1 perf record -F 999 -g -o ./results/host/lat_fcntl/perf.data ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_fcntl -P 1 -W 5 -N 1000
-sudo strace -c -f ./lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_fcntl -P 1 -W 5 -N 1000 2>&1 | sudo tee ./results/host/lat_fcntl/strace.txt
-
+echo "[INFO] Running Phase 1: Profiling lat_fcntl..."
 CPU_CORE=1 sudo ./host_perf.sh lat_fcntl -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
 sleep 2
+
 PID=$(pgrep -n -x lat_fcntl)
 if [ -n "$PID" ]; then
-    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_fcntl { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/host/lat_fcntl/bpftrace.txt
+    echo "[INFO] Attaching profilers to Host PID: $PID"
+    sudo perf stat -p $PID -o ./results/host/lat_fcntl/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/host/lat_fcntl/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/host/lat_fcntl/strace.txt
+    sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_fcntl /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/host/lat_fcntl/bpftrace.txt
+else
+    echo "[ERROR] Could not catch process."
 fi
 sudo pkill -9 -x lat_fcntl 2>/dev/null || true
+echo "[INFO] Phase 1 Complete."
 
-echo "[INFO] Running Phase 2: Benchmarking..."
+echo "[INFO] Running Phase 2: Benchmarking lat_fcntl..."
 CPU_CORE=1 sudo ./host_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/host/lat_fcntl/lat_fcntl.txt
 ```
 
@@ -856,19 +860,24 @@ CPU_CORE=1 sudo ./host_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/host/lat_fcn
 ```bash 
 sudo -v
 mkdir -p results/docker/lat_fcntl
-echo "[INFO] Running Phase 1: Profiling..."
+echo "[INFO] Running Phase 1: Profiling Docker lat_fcntl..."
 CPU_CORE=1 sudo ./docker_perf.sh lat_fcntl -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
 sleep 5
+
 PID=$(pgrep -n -x lat_fcntl)
 if [ -n "$PID" ]; then
+    echo "[INFO] Attaching profilers to Docker PID: $PID"
     sudo perf stat -p $PID -o ./results/docker/lat_fcntl/perf_stat.txt -- sleep 5
     sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_fcntl/perf.data -- sleep 5
     sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_fcntl/strace.txt
-    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_fcntl { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_fcntl/bpftrace.txt
+    sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_fcntl /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/docker/lat_fcntl/bpftrace.txt
+else
+    echo "[ERROR] Could not catch process."
 fi
 sudo pkill -9 -x lat_fcntl 2>/dev/null || true
+echo "[INFO] Phase 1 Complete."
 
-echo "[INFO] Running Phase 2: Benchmarking..."
+echo "[INFO] Running Phase 2: Benchmarking Docker lat_fcntl..."
 CPU_CORE=1 sudo ./docker_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/docker/lat_fcntl/lat_fcntl.txt
 ```
 
@@ -876,19 +885,25 @@ CPU_CORE=1 sudo ./docker_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/docker/lat
 ```bash
 sudo -v
 mkdir -p results/k8s/lat_fcntl
-echo "[INFO] Running Phase 1: Profiling..."
+echo "[INFO] Running Phase 1: Profiling K8s lat_fcntl..."
 CPU_CORE=1 sudo ./k8s_perf.sh lat_fcntl -P 1 -W 5 -N 10000000 -o /dev/null > /dev/null 2>&1 &
-sleep 5
+echo "[INFO] Waiting 15s for Pod to launch..."
+sleep 15
+
 PID=$(pgrep -n -x lat_fcntl)
 if [ -n "$PID" ]; then
+    echo "[INFO] Attaching profilers to K8s PID: $PID"
     sudo perf stat -p $PID -o ./results/k8s/lat_fcntl/perf_stat.txt -- sleep 5
     sudo perf record -F 999 -g -p $PID -o ./results/k8s/lat_fcntl/perf.data -- sleep 5
     sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/k8s/lat_fcntl/strace.txt
-    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_fcntl { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/k8s/lat_fcntl/bpftrace.txt
+    sudo timeout 10s bpftrace -e "tracepoint:syscalls:sys_enter_fcntl /pid == $PID/ { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_fcntl /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }" | sudo tee ./results/k8s/lat_fcntl/bpftrace.txt
+else
+    echo "[ERROR] Could not catch process."
 fi
 sudo pkill -9 -x lat_fcntl 2>/dev/null || true
+echo "[INFO] Phase 1 Complete."
 
-echo "[INFO] Running Phase 2: Benchmarking..."
+echo "[INFO] Running Phase 2: Benchmarking K8s lat_fcntl..."
 CPU_CORE=1 sudo ./k8s_perf.sh lat_fcntl -P 1 -W 5 -N 50 -o results/k8s/lat_fcntl/lat_fcntl.txt
 ```
 
