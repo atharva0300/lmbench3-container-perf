@@ -246,6 +246,32 @@ sudo pkill -9 -x lat_ctx 2>/dev/null || true
 echo "[INFO] Docker profiling complete."
 ```
 
+**Docker production**
+```bash
+mkdir -p results/docker/lat_ctx_prod
+echo "[INFO] Launching Production Docker benchmark in background..."
+CPU_CORE=1 sudo ./docker_perf_production.sh lat_ctx -P 1 -W 5 -N 10000000 -s 32 2 -o /dev/null > /dev/null 2>&1 &
+
+echo "[INFO] Hunting for Container PID..."
+PID=""
+for i in {1..20}; do
+    PID=$(pgrep -n -x lat_ctx)
+    if [ -n "$PID" ]; then echo "[INFO] Found PID: $PID"; break; fi
+    sleep 1
+done
+
+if [ -z "$PID" ]; then
+    echo "[ERROR] Could not catch process."
+else
+    sudo perf stat -p $PID -o ./results/docker/lat_ctx_prod/perf_stat.txt -- sleep 5
+    sudo perf record -F 999 -g -p $PID -o ./results/docker/lat_ctx_prod/perf.data -- sleep 5
+    sudo timeout 5s strace -c -f -p $PID 2>&1 | sudo tee ./results/docker/lat_ctx_prod/strace.txt
+    sudo timeout 10s bpftrace -e 'tracepoint:syscalls:sys_enter_read { @start[tid] = nsecs; } tracepoint:syscalls:sys_exit_read /@start[tid]/ { @lat[comm] = hist(nsecs - @start[tid]); delete(@start[tid]); }' | sudo tee ./results/docker/lat_ctx_prod/bpftrace.txt
+fi
+sudo pkill -9 -x lat_ctx 2>/dev/null || true
+echo "[INFO] Production Docker profiling complete."
+```
+
 **Kubernetes:**
 ```bash
 mkdir -p results/k8s/lat_ctx
@@ -276,6 +302,7 @@ echo "[INFO] K8s profiling complete."
 ```bash
 CPU_CORE=1 sudo ./host_perf.sh lat_ctx -P 1 -W 5 -N 50 -s 32 2 -o results/host/lat_ctx/lat_ctx.txt
 CPU_CORE=1 sudo ./docker_perf.sh lat_ctx -P 1 -W 5 -N 50 -s 32 2 -o results/docker/lat_ctx/lat_ctx.txt
+CPU_CORE=1 sudo ./docker_perf_production.sh lat_ctx -P 1 -W 5 -N 50 -s 32 2 -o results/docker/lat_ctx_prod/lat_ctx_prod.txt
 CPU_CORE=1 sudo ./k8s_perf.sh lat_ctx -P 1 -W 5 -N 50 -s 32 2 -o results/k8s/lat_ctx/lat_ctx.txt
 ```
 
