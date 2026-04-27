@@ -1,0 +1,20 @@
+# started on Mon Apr 27 13:25:23 2026
+
+
+ Performance counter stats for './lmbench-3.0-a9/bin/x86_64-linux-gnu/lat_ctx -P 1 -W 5 -N 1000 -s 32 2':
+
+    11,374,622,007      task-clock                       #    1.000 CPUs utilized             
+           963,029      context-switches                 #   84.665 K/sec                     
+                 0      cpu-migrations                   #    0.000 /sec                      
+               224      page-faults                      #   19.693 /sec                      
+    38,399,775,163      instructions                     #    1.39  insn per cycle            
+    27,643,575,259      cycles                           #    2.430 GHz                       
+     4,852,983,622      branches                         #  426.650 M/sec                     
+        31,741,326      branch-misses                    #    0.65% of all branches           
+
+      11.375847486 seconds time elapsed
+
+       6.526895000 seconds user
+       4.848697000 seconds sys
+
+

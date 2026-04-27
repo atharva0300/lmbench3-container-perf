@@ -1,0 +1,7 @@
+strace: Process 20291 attached
+strace: Process 20291 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000054          10         5           pselect6
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000054          10         5           total

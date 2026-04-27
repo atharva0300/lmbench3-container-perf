@@ -1,0 +1,36 @@
+strace: Process 17852 attached
+
+"size=32k ovr=38.67
+strace: Process 17853 attached
+strace: Process 17854 attached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 74.01    0.183948       61316         3           wait4
+ 13.06    0.032454           3      8824           write
+ 12.47    0.031001           3      8825           read
+  0.10    0.000241         241         1           execve
+  0.08    0.000206           0       414           getrusage
+  0.05    0.000125          41         3           clone
+  0.05    0.000118           2        52           rt_sigaction
+  0.04    0.000100           2        36           close
+  0.03    0.000074           2        36           getppid
+  0.03    0.000073           6        12           pselect6
+  0.03    0.000063           7         8           mmap
+  0.01    0.000033           2        12           pipe2
+  0.01    0.000021           7         3           mprotect
+  0.01    0.000013          13         1           munmap
+  0.01    0.000013           3         4           alarm
+  0.00    0.000012           6         2           openat
+  0.00    0.000006           3         2           fstat
+  0.00    0.000006           3         2           pread64
+  0.00    0.000005           5         1         1 access
+  0.00    0.000005           5         1           kill
+  0.00    0.000004           1         3           brk
+  0.00    0.000004           0         5           prlimit64
+  0.00    0.000003           3         1           arch_prctl
+  0.00    0.000003           3         1           set_tid_address
+  0.00    0.000003           0         4           set_robust_list
+  0.00    0.000003           3         1           rseq
+  0.00    0.000000           0         1           getrandom
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.248537          13     18258         1 total

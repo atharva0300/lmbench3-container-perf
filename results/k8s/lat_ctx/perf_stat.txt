@@ -1,0 +1,16 @@
+# started on Mon Apr 27 13:29:01 2026
+
+
+ Performance counter stats for process id '25056':
+
+     5,001,107,188      task-clock                       #    1.000 CPUs utilized             
+                13      context-switches                 #    2.599 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                44      page-faults                      #    8.798 /sec                      
+    17,173,327,078      instructions                     #    1.38  insn per cycle            
+    12,473,664,836      cycles                           #    2.494 GHz                       
+     1,858,647,173      branches                         #  371.647 M/sec                     
+         4,787,218      branch-misses                    #    0.26% of all branches           
+
+       5.001177338 seconds time elapsed
+
