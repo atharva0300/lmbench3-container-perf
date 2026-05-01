@@ -1,3 +1,4 @@
 #results/**/*
 #perf.data
 perf.data.old
+results/**/perf_script_sample.txt

@@ -1,0 +1,1352 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 6K of event 'cycles:P'
+# Event count (approx.): 14940695709
+#
+# Children      Self  Command      Shared Object         Symbol                                   
+# ........  ........  ...........  ....................  .........................................
+#
+    92.31%     0.00%  lat_syscall  [unknown]             [k] 0x00005bae7b6fa01f
+            |
+            ---0x5bae7b6fa01f
+               |          
+                --91.66%--__GI___libc_write
+                          |          
+                          |--71.18%--entry_SYSCALL_64_after_hwframe
+                          |          |          
+                          |          |--60.17%--do_syscall_64
+                          |          |          |          
+                          |          |          |--26.35%--x64_sys_call
+                          |          |          |          |          
+                          |          |          |           --25.40%--__x64_sys_write
+                          |          |          |                     |          
+                          |          |          |                      --24.37%--ksys_write
+                          |          |          |                                |          
+                          |          |          |                                |--18.15%--vfs_write
+                          |          |          |                                |          |          
+                          |          |          |                                |          |--9.51%--rw_verify_area
+                          |          |          |                                |          |          |          
+                          |          |          |                                |          |          |--7.75%--security_file_permission
+                          |          |          |                                |          |          |          |          
+                          |          |          |                                |          |          |           --6.30%--apparmor_file_permission
+                          |          |          |                                |          |          |                     |          
+                          |          |          |                                |          |          |                      --5.52%--common_file_perm
+                          |          |          |                                |          |          |                                |          
+                          |          |          |                                |          |          |                                 --1.01%--aa_file_perm
+                          |          |          |                                |          |          |          
+                          |          |          |                                |          |           --0.63%--apparmor_file_permission
+                          |          |          |                                |          |          
+                          |          |          |                                |           --4.64%--__fsnotify_parent
+                          |          |          |                                |          
+                          |          |          |                                |--3.06%--fdget_pos
+                          |          |          |                                |          
+                          |          |          |                                 --0.62%--__fsnotify_parent
+                          |          |          |          
+                          |          |          |--11.33%--__ct_user_enter
+                          |          |          |          |          
+                          |          |          |          |--5.96%--vtime_user_enter
+                          |          |          |          |          |          
+                          |          |          |          |           --5.02%--get_vtime_delta
+                          |          |          |          |                     |          
+                          |          |          |          |                      --3.93%--sched_clock
+                          |          |          |          |                                |          
+                          |          |          |          |                                 --3.51%--sched_clock_noinstr
+                          |          |          |          |                                           |          
+                          |          |          |          |                                            --3.36%--native_sched_clock
+                          |          |          |          |          
+                          |          |          |          |--2.55%--ct_kernel_exit_state
+                          |          |          |          |          
+                          |          |          |           --1.03%--ct_kernel_exit.isra.0
+                          |          |          |          
+                          |          |          |--9.78%--__ct_user_exit
+                          |          |          |          |          
+                          |          |          |          |--4.11%--vtime_user_exit
+                          |          |          |          |          |          
+                          |          |          |          |           --3.46%--get_vtime_delta
+                          |          |          |          |                     |          
+                          |          |          |          |                      --2.56%--sched_clock
+                          |          |          |          |                                |          
+                          |          |          |          |                                 --2.00%--sched_clock_noinstr
+                          |          |          |          |                                           |          
+                          |          |          |          |                                            --1.86%--native_sched_clock
+                          |          |          |          |          
+                          |          |          |          |--2.56%--ct_kernel_exit_state
+                          |          |          |          |          
+                          |          |          |           --1.96%--ct_kernel_enter.isra.0
+                          |          |          |          
+                          |          |          |--2.73%--arch_exit_to_user_mode_prepare.isra.0
+                          |          |          |          
+                          |          |          |--0.98%--context_tracking_recursion_enter
+                          |          |          |          
+                          |          |           --0.87%--rcu_nocb_flush_deferred_wakeup
+                          |          |          
+                          |          |--7.17%--clear_bhb_loop
+                          |          |          
+                          |          |--0.68%--__ct_user_exit
+                          |          |          
+                          |           --0.57%--arch_exit_to_user_mode_prepare.isra.0
+                          |          
+                          |--7.85%--entry_SYSCALL_64
+                          |          
+                          |--2.66%--entry_SYSCALL_64_safe_stack
+                          |          
+                          |--1.38%--clear_bhb_loop
+                          |          
+                           --1.16%--syscall_return_via_sysret
+
+    91.76%     6.17%  lat_syscall  libc.so.6             [.] __GI___libc_write
+            |          
+            |--85.59%--__GI___libc_write
+            |          |          
+            |          |--71.18%--entry_SYSCALL_64_after_hwframe
+            |          |          |          
+            |          |          |--60.17%--do_syscall_64
+            |          |          |          |          
+            |          |          |          |--26.35%--x64_sys_call
+            |          |          |          |          |          
+            |          |          |          |           --25.40%--__x64_sys_write
+            |          |          |          |                     |          
+            |          |          |          |                      --24.37%--ksys_write
+            |          |          |          |                                |          
+            |          |          |          |                                |--18.15%--vfs_write
+            |          |          |          |                                |          |          
+            |          |          |          |                                |          |--9.51%--rw_verify_area
+            |          |          |          |                                |          |          |          
+            |          |          |          |                                |          |          |--7.75%--security_file_permission
+            |          |          |          |                                |          |          |          |          
+            |          |          |          |                                |          |          |           --6.30%--apparmor_file_permission
+            |          |          |          |                                |          |          |                     |          
+            |          |          |          |                                |          |          |                      --5.52%--common_file_perm
+            |          |          |          |                                |          |          |                                |          
+            |          |          |          |                                |          |          |                                 --1.01%--aa_file_perm
+            |          |          |          |                                |          |          |          
+            |          |          |          |                                |          |           --0.63%--apparmor_file_permission
+            |          |          |          |                                |          |          
+            |          |          |          |                                |           --4.64%--__fsnotify_parent
+            |          |          |          |                                |          
+            |          |          |          |                                |--3.06%--fdget_pos
+            |          |          |          |                                |          
+            |          |          |          |                                 --0.62%--__fsnotify_parent
+            |          |          |          |          
+            |          |          |          |--11.33%--__ct_user_enter
+            |          |          |          |          |          
+            |          |          |          |          |--5.96%--vtime_user_enter
+            |          |          |          |          |          |          
+            |          |          |          |          |           --5.02%--get_vtime_delta
+            |          |          |          |          |                     |          
+            |          |          |          |          |                      --3.93%--sched_clock
+            |          |          |          |          |                                |          
+            |          |          |          |          |                                 --3.51%--sched_clock_noinstr
+            |          |          |          |          |                                           |          
+            |          |          |          |          |                                            --3.36%--native_sched_clock
+            |          |          |          |          |          
+            |          |          |          |          |--2.55%--ct_kernel_exit_state
+            |          |          |          |          |          
+            |          |          |          |           --1.03%--ct_kernel_exit.isra.0
+            |          |          |          |          
+            |          |          |          |--9.78%--__ct_user_exit
+            |          |          |          |          |          
+            |          |          |          |          |--4.11%--vtime_user_exit
+            |          |          |          |          |          |          
+            |          |          |          |          |           --3.46%--get_vtime_delta
+            |          |          |          |          |                     |          
+            |          |          |          |          |                      --2.56%--sched_clock
+            |          |          |          |          |                                |          
+            |          |          |          |          |                                 --2.00%--sched_clock_noinstr
+            |          |          |          |          |                                           |          
+            |          |          |          |          |                                            --1.86%--native_sched_clock
+            |          |          |          |          |          
+            |          |          |          |          |--2.56%--ct_kernel_exit_state
+            |          |          |          |          |          
+            |          |          |          |           --1.96%--ct_kernel_enter.isra.0
+            |          |          |          |          
+            |          |          |          |--2.73%--arch_exit_to_user_mode_prepare.isra.0
+            |          |          |          |          
+            |          |          |          |--0.98%--context_tracking_recursion_enter
+            |          |          |          |          
+            |          |          |           --0.87%--rcu_nocb_flush_deferred_wakeup
+            |          |          |          
+            |          |          |--7.17%--clear_bhb_loop
+            |          |          |          
+            |          |          |--0.68%--__ct_user_exit
+            |          |          |          
+            |          |           --0.57%--arch_exit_to_user_mode_prepare.isra.0
+            |          |          
+            |          |--3.58%--entry_SYSCALL_64
+            |          |          
+            |          |--2.66%--entry_SYSCALL_64_safe_stack
+            |          |          
+            |          |--1.38%--clear_bhb_loop
+            |          |          
+            |           --1.16%--syscall_return_via_sysret
+            |          
+             --6.17%--0x5bae7b6fa01f
+                       |          
+                        --6.07%--__GI___libc_write
+                                  |          
+                                   --4.28%--entry_SYSCALL_64
+
+    71.52%     2.03%  lat_syscall  [kernel.kallsyms]     [k] entry_SYSCALL_64_after_hwframe
+            |          
+            |--69.49%--entry_SYSCALL_64_after_hwframe
+            |          |          
+            |          |--60.17%--do_syscall_64
+            |          |          |          
+            |          |          |--26.35%--x64_sys_call
+            |          |          |          |          
+            |          |          |           --25.40%--__x64_sys_write
+            |          |          |                     |          
+            |          |          |                      --24.37%--ksys_write
+            |          |          |                                |          
+            |          |          |                                |--18.15%--vfs_write
+            |          |          |                                |          |          
+            |          |          |                                |          |--9.51%--rw_verify_area
+            |          |          |                                |          |          |          
+            |          |          |                                |          |          |--7.75%--security_file_permission
+            |          |          |                                |          |          |          |          
+            |          |          |                                |          |          |           --6.30%--apparmor_file_permission
+            |          |          |                                |          |          |                     |          
+            |          |          |                                |          |          |                      --5.52%--common_file_perm
+            |          |          |                                |          |          |                                |          
+            |          |          |                                |          |          |                                 --1.01%--aa_file_perm
+            |          |          |                                |          |          |          
+            |          |          |                                |          |           --0.63%--apparmor_file_permission
+            |          |          |                                |          |          
+            |          |          |                                |           --4.64%--__fsnotify_parent
+            |          |          |                                |          
+            |          |          |                                |--3.06%--fdget_pos
+            |          |          |                                |          
+            |          |          |                                 --0.62%--__fsnotify_parent
+            |          |          |          
+            |          |          |--11.33%--__ct_user_enter
+            |          |          |          |          
+            |          |          |          |--5.96%--vtime_user_enter
+            |          |          |          |          |          
+            |          |          |          |           --5.02%--get_vtime_delta
+            |          |          |          |                     |          
+            |          |          |          |                      --3.93%--sched_clock
+            |          |          |          |                                |          
+            |          |          |          |                                 --3.51%--sched_clock_noinstr
+            |          |          |          |                                           |          
+            |          |          |          |                                            --3.36%--native_sched_clock
+            |          |          |          |          
+            |          |          |          |--2.55%--ct_kernel_exit_state
+            |          |          |          |          
+            |          |          |           --1.03%--ct_kernel_exit.isra.0
+            |          |          |          
+            |          |          |--9.78%--__ct_user_exit
+            |          |          |          |          
+            |          |          |          |--4.11%--vtime_user_exit
+            |          |          |          |          |          
+            |          |          |          |           --3.46%--get_vtime_delta
+            |          |          |          |                     |          
+            |          |          |          |                      --2.56%--sched_clock
+            |          |          |          |                                |          
+            |          |          |          |                                 --2.00%--sched_clock_noinstr
+            |          |          |          |                                           |          
+            |          |          |          |                                            --1.86%--native_sched_clock
+            |          |          |          |          
+            |          |          |          |--2.56%--ct_kernel_exit_state
+            |          |          |          |          
+            |          |          |           --1.96%--ct_kernel_enter.isra.0
+            |          |          |          
+            |          |          |--2.73%--arch_exit_to_user_mode_prepare.isra.0
+            |          |          |          
+            |          |          |--0.98%--context_tracking_recursion_enter
+            |          |          |          
+            |          |           --0.87%--rcu_nocb_flush_deferred_wakeup
+            |          |          
+            |          |--7.17%--clear_bhb_loop
+            |          |          
+            |          |--0.68%--__ct_user_exit
+            |          |          
+            |           --0.57%--arch_exit_to_user_mode_prepare.isra.0
+            |          
+             --2.01%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       |          
+                        --1.70%--entry_SYSCALL_64_after_hwframe
+
+    61.36%     6.44%  lat_syscall  [kernel.kallsyms]     [k] do_syscall_64
+            |          
+            |--54.92%--do_syscall_64
+            |          |          
+            |          |--26.35%--x64_sys_call
+            |          |          |          
+            |          |           --25.40%--__x64_sys_write
+            |          |                     |          
+            |          |                      --24.37%--ksys_write
+            |          |                                |          
+            |          |                                |--18.15%--vfs_write
+            |          |                                |          |          
+            |          |                                |          |--9.51%--rw_verify_area
+            |          |                                |          |          |          
+            |          |                                |          |          |--7.75%--security_file_permission
+            |          |                                |          |          |          |          
+            |          |                                |          |          |           --6.30%--apparmor_file_permission
+            |          |                                |          |          |                     |          
+            |          |                                |          |          |                      --5.52%--common_file_perm
+            |          |                                |          |          |                                |          
+            |          |                                |          |          |                                 --1.01%--aa_file_perm
+            |          |                                |          |          |          
+            |          |                                |          |           --0.63%--apparmor_file_permission
+            |          |                                |          |          
+            |          |                                |           --4.64%--__fsnotify_parent
+            |          |                                |          
+            |          |                                |--3.06%--fdget_pos
+            |          |                                |          
+            |          |                                 --0.62%--__fsnotify_parent
+            |          |          
+            |          |--11.33%--__ct_user_enter
+            |          |          |          
+            |          |          |--5.96%--vtime_user_enter
+            |          |          |          |          
+            |          |          |           --5.02%--get_vtime_delta
+            |          |          |                     |          
+            |          |          |                      --3.93%--sched_clock
+            |          |          |                                |          
+            |          |          |                                 --3.51%--sched_clock_noinstr
+            |          |          |                                           |          
+            |          |          |                                            --3.36%--native_sched_clock
+            |          |          |          
+            |          |          |--2.55%--ct_kernel_exit_state
+            |          |          |          
+            |          |           --1.03%--ct_kernel_exit.isra.0
+            |          |          
+            |          |--9.78%--__ct_user_exit
+            |          |          |          
+            |          |          |--4.11%--vtime_user_exit
+            |          |          |          |          
+            |          |          |           --3.46%--get_vtime_delta
+            |          |          |                     |          
+            |          |          |                      --2.56%--sched_clock
+            |          |          |                                |          
+            |          |          |                                 --2.00%--sched_clock_noinstr
+            |          |          |                                           |          
+            |          |          |                                            --1.86%--native_sched_clock
+            |          |          |          
+            |          |          |--2.56%--ct_kernel_exit_state
+            |          |          |          
+            |          |           --1.96%--ct_kernel_enter.isra.0
+            |          |          
+            |          |--2.73%--arch_exit_to_user_mode_prepare.isra.0
+            |          |          
+            |          |--0.98%--context_tracking_recursion_enter
+            |          |          
+            |           --0.87%--rcu_nocb_flush_deferred_wakeup
+            |          
+             --6.44%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       |          
+                        --6.32%--entry_SYSCALL_64_after_hwframe
+                                  |          
+                                   --5.34%--do_syscall_64
+
+    26.73%     0.87%  lat_syscall  [kernel.kallsyms]     [k] x64_sys_call
+            |          
+            |--25.87%--x64_sys_call
+            |          |          
+            |           --25.40%--__x64_sys_write
+            |                     |          
+            |                      --24.37%--ksys_write
+            |                                |          
+            |                                |--18.15%--vfs_write
+            |                                |          |          
+            |                                |          |--9.51%--rw_verify_area
+            |                                |          |          |          
+            |                                |          |          |--7.75%--security_file_permission
+            |                                |          |          |          |          
+            |                                |          |          |           --6.30%--apparmor_file_permission
+            |                                |          |          |                     |          
+            |                                |          |          |                      --5.52%--common_file_perm
+            |                                |          |          |                                |          
+            |                                |          |          |                                 --1.01%--aa_file_perm
+            |                                |          |          |          
+            |                                |          |           --0.63%--apparmor_file_permission
+            |                                |          |          
+            |                                |           --4.64%--__fsnotify_parent
+            |                                |          
+            |                                |--3.06%--fdget_pos
+            |                                |          
+            |                                 --0.62%--__fsnotify_parent
+            |          
+             --0.87%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       |          
+                        --0.70%--do_syscall_64
+                                  |          
+                                   --0.55%--x64_sys_call
+
+    26.05%     0.50%  lat_syscall  [kernel.kallsyms]     [k] __x64_sys_write
+            |          
+             --25.55%--__x64_sys_write
+                       |          
+                        --24.37%--ksys_write
+                                  |          
+                                  |--18.15%--vfs_write
+                                  |          |          
+                                  |          |--9.51%--rw_verify_area
+                                  |          |          |          
+                                  |          |          |--7.75%--security_file_permission
+                                  |          |          |          |          
+                                  |          |          |           --6.30%--apparmor_file_permission
+                                  |          |          |                     |          
+                                  |          |          |                      --5.52%--common_file_perm
+                                  |          |          |                                |          
+                                  |          |          |                                 --1.01%--aa_file_perm
+                                  |          |          |          
+                                  |          |           --0.63%--apparmor_file_permission
+                                  |          |          
+                                  |           --4.64%--__fsnotify_parent
+                                  |          
+                                  |--3.06%--fdget_pos
+                                  |          
+                                   --0.62%--__fsnotify_parent
+
+    24.88%     1.90%  lat_syscall  [kernel.kallsyms]     [k] ksys_write
+            |          
+            |--22.99%--ksys_write
+            |          |          
+            |          |--18.15%--vfs_write
+            |          |          |          
+            |          |          |--9.51%--rw_verify_area
+            |          |          |          |          
+            |          |          |          |--7.75%--security_file_permission
+            |          |          |          |          |          
+            |          |          |          |           --6.30%--apparmor_file_permission
+            |          |          |          |                     |          
+            |          |          |          |                      --5.52%--common_file_perm
+            |          |          |          |                                |          
+            |          |          |          |                                 --1.01%--aa_file_perm
+            |          |          |          |          
+            |          |          |           --0.63%--apparmor_file_permission
+            |          |          |          
+            |          |           --4.64%--__fsnotify_parent
+            |          |          
+            |          |--3.06%--fdget_pos
+            |          |          
+            |           --0.62%--__fsnotify_parent
+            |          
+             --1.90%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       x64_sys_call
+                       |          
+                        --1.71%--__x64_sys_write
+                                  |          
+                                   --1.58%--ksys_write
+
+    18.61%     3.64%  lat_syscall  [kernel.kallsyms]     [k] vfs_write
+            |          
+            |--14.97%--vfs_write
+            |          |          
+            |          |--9.51%--rw_verify_area
+            |          |          |          
+            |          |          |--7.75%--security_file_permission
+            |          |          |          |          
+            |          |          |           --6.30%--apparmor_file_permission
+            |          |          |                     |          
+            |          |          |                      --5.52%--common_file_perm
+            |          |          |                                |          
+            |          |          |                                 --1.01%--aa_file_perm
+            |          |          |          
+            |          |           --0.63%--apparmor_file_permission
+            |          |          
+            |           --4.64%--__fsnotify_parent
+            |          
+             --3.64%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       x64_sys_call
+                       __x64_sys_write
+                       |          
+                        --3.39%--ksys_write
+                                  |          
+                                   --3.31%--vfs_write
+
+    11.85%     1.55%  lat_syscall  [kernel.kallsyms]     [k] __ct_user_enter
+            |          
+            |--10.30%--__ct_user_enter
+            |          |          
+            |          |--5.96%--vtime_user_enter
+            |          |          |          
+            |          |           --5.02%--get_vtime_delta
+            |          |                     |          
+            |          |                      --3.93%--sched_clock
+            |          |                                |          
+            |          |                                 --3.51%--sched_clock_noinstr
+            |          |                                           |          
+            |          |                                            --3.36%--native_sched_clock
+            |          |          
+            |          |--2.55%--ct_kernel_exit_state
+            |          |          
+            |           --1.03%--ct_kernel_exit.isra.0
+            |          
+             --1.55%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       |          
+                        --1.48%--do_syscall_64
+                                  |          
+                                   --1.15%--__ct_user_enter
+
+    10.85%     1.45%  lat_syscall  [kernel.kallsyms]     [k] __ct_user_exit
+            |          
+            |--9.40%--__ct_user_exit
+            |          |          
+            |          |--4.11%--vtime_user_exit
+            |          |          |          
+            |          |           --3.46%--get_vtime_delta
+            |          |                     |          
+            |          |                      --2.56%--sched_clock
+            |          |                                |          
+            |          |                                 --2.00%--sched_clock_noinstr
+            |          |                                           |          
+            |          |                                            --1.86%--native_sched_clock
+            |          |          
+            |          |--2.56%--ct_kernel_exit_state
+            |          |          
+            |           --1.96%--ct_kernel_enter.isra.0
+            |          
+             --1.45%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       |          
+                        --1.15%--do_syscall_64
+                                  |          
+                                   --0.77%--__ct_user_exit
+
+     9.86%     1.33%  lat_syscall  [kernel.kallsyms]     [k] rw_verify_area
+            |          
+            |--8.53%--rw_verify_area
+            |          |          
+            |          |--7.75%--security_file_permission
+            |          |          |          
+            |          |           --6.30%--apparmor_file_permission
+            |          |                     |          
+            |          |                      --5.52%--common_file_perm
+            |          |                                |          
+            |          |                                 --1.01%--aa_file_perm
+            |          |          
+            |           --0.63%--apparmor_file_permission
+            |          
+             --1.33%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       x64_sys_call
+                       __x64_sys_write
+                       ksys_write
+                       |          
+                        --0.98%--vfs_write
+                                  rw_verify_area
+
+     9.30%     1.83%  lat_syscall  [kernel.kallsyms]     [k] get_vtime_delta
+            |          
+            |--7.47%--get_vtime_delta
+            |          |          
+            |           --6.49%--sched_clock
+            |                     |          
+            |                      --5.51%--sched_clock_noinstr
+            |                                |          
+            |                                 --5.22%--native_sched_clock
+            |          
+             --1.83%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       |          
+                       |--0.96%--__ct_user_enter
+                       |          |          
+                       |           --0.88%--vtime_user_enter
+                       |                     |          
+                       |                      --0.62%--get_vtime_delta
+                       |          
+                        --0.87%--__ct_user_exit
+                                  |          
+                                   --0.67%--vtime_user_exit
+
+     8.98%     4.71%  lat_syscall  [kernel.kallsyms]     [k] entry_SYSCALL_64
+            |          
+            |--4.71%--0x5bae7b6fa01f
+            |          __GI___libc_write
+            |          |          
+            |          |--3.58%--entry_SYSCALL_64
+            |          |          
+            |           --1.13%--entry_SYSCALL_64_safe_stack
+            |          
+             --4.28%--entry_SYSCALL_64
+
+     8.67%     8.53%  lat_syscall  [kernel.kallsyms]     [k] clear_bhb_loop
+            |          
+             --8.53%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       |          
+                       |--7.29%--entry_SYSCALL_64_after_hwframe
+                       |          |          
+                       |           --7.17%--clear_bhb_loop
+                       |          
+                        --1.25%--clear_bhb_loop
+
+     8.05%     1.08%  lat_syscall  [kernel.kallsyms]     [k] security_file_permission
+            |          
+            |--6.97%--security_file_permission
+            |          |          
+            |           --6.30%--apparmor_file_permission
+            |                     |          
+            |                      --5.52%--common_file_perm
+            |                                |          
+            |                                 --1.01%--aa_file_perm
+            |          
+             --1.08%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       x64_sys_call
+                       __x64_sys_write
+                       ksys_write
+                       vfs_write
+                       |          
+                        --0.91%--rw_verify_area
+                                  |          
+                                   --0.78%--security_file_permission
+
+     7.29%     0.78%  lat_syscall  [kernel.kallsyms]     [k] sched_clock
+            |          
+            |--6.50%--sched_clock
+            |          |          
+            |           --5.51%--sched_clock_noinstr
+            |                     |          
+            |                      --5.22%--native_sched_clock
+            |          
+             --0.78%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+
+     7.04%     0.77%  lat_syscall  [kernel.kallsyms]     [k] apparmor_file_permission
+            |          
+            |--6.27%--apparmor_file_permission
+            |          |          
+            |           --5.52%--common_file_perm
+            |                     |          
+            |                      --1.01%--aa_file_perm
+            |          
+             --0.77%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       x64_sys_call
+                       __x64_sys_write
+                       ksys_write
+                       vfs_write
+                       rw_verify_area
+                       |          
+                        --0.55%--apparmor_file_permission
+
+     6.42%     0.65%  lat_syscall  [kernel.kallsyms]     [k] sched_clock_noinstr
+            |          
+            |--5.77%--sched_clock_noinstr
+            |          |          
+            |           --5.22%--native_sched_clock
+            |          
+             --0.65%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+
+     6.37%     0.75%  lat_syscall  [kernel.kallsyms]     [k] vtime_user_enter
+            |          
+            |--5.62%--vtime_user_enter
+            |          |          
+            |           --5.02%--get_vtime_delta
+            |                     |          
+            |                      --3.93%--sched_clock
+            |                                |          
+            |                                 --3.51%--sched_clock_noinstr
+            |                                           |          
+            |                                            --3.36%--native_sched_clock
+            |          
+             --0.75%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       |          
+                        --0.52%--__ct_user_enter
+
+     6.05%     4.21%  lat_syscall  [kernel.kallsyms]     [k] common_file_perm
+            |          
+            |--4.21%--0x5bae7b6fa01f
+            |          __GI___libc_write
+            |          entry_SYSCALL_64_after_hwframe
+            |          do_syscall_64
+            |          x64_sys_call
+            |          __x64_sys_write
+            |          ksys_write
+            |          vfs_write
+            |          rw_verify_area
+            |          security_file_permission
+            |          |          
+            |           --3.79%--apparmor_file_permission
+            |                     |          
+            |                      --3.78%--common_file_perm
+            |          
+             --1.85%--common_file_perm
+                       |          
+                        --1.01%--aa_file_perm
+
+     5.92%     5.69%  lat_syscall  [kernel.kallsyms]     [k] native_sched_clock
+            |          
+             --5.69%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       |          
+                       |--3.54%--__ct_user_enter
+                       |          vtime_user_enter
+                       |          get_vtime_delta
+                       |          sched_clock
+                       |          |          
+                       |           --3.36%--sched_clock_noinstr
+                       |                     native_sched_clock
+                       |          
+                        --2.15%--__ct_user_exit
+                                  vtime_user_exit
+                                  get_vtime_delta
+                                  sched_clock
+                                  |          
+                                   --1.86%--sched_clock_noinstr
+                                             native_sched_clock
+
+     5.26%     5.16%  lat_syscall  [kernel.kallsyms]     [k] __fsnotify_parent
+            |          
+             --5.16%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       x64_sys_call
+                       __x64_sys_write
+                       ksys_write
+                       |          
+                       |--4.62%--vfs_write
+                       |          __fsnotify_parent
+                       |          
+                        --0.53%--__fsnotify_parent
+
+     5.11%     5.11%  lat_syscall  [kernel.kallsyms]     [k] ct_kernel_exit_state
+            |
+            ---0x5bae7b6fa01f
+               __GI___libc_write
+               entry_SYSCALL_64_after_hwframe
+               do_syscall_64
+               |          
+               |--2.56%--__ct_user_exit
+               |          ct_kernel_exit_state
+               |          
+                --2.55%--__ct_user_enter
+                          ct_kernel_exit_state
+
+     5.07%     4.91%  lat_syscall  [kernel.kallsyms]     [k] entry_SYSRETQ_unsafe_stack
+            |          
+             --4.89%--0x5bae7b6fa01f
+                       __GI___libc_write
+
+     4.53%     4.50%  lat_syscall  lat_syscall           [.] time_N
+            |
+            ---time_N
+
+     4.37%     0.60%  lat_syscall  [kernel.kallsyms]     [k] vtime_user_exit
+            |          
+            |--3.78%--vtime_user_exit
+            |          |          
+            |           --3.46%--get_vtime_delta
+            |                     |          
+            |                      --2.56%--sched_clock
+            |                                |          
+            |                                 --2.00%--sched_clock_noinstr
+            |                                           |          
+            |                                            --1.86%--native_sched_clock
+            |          
+             --0.60%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+
+     3.88%     2.94%  lat_syscall  [kernel.kallsyms]     [k] its_return_thunk
+            |          
+            |--2.94%--0x5bae7b6fa01f
+            |          __GI___libc_write
+            |          entry_SYSCALL_64_after_hwframe
+            |          do_syscall_64
+            |          |          
+            |          |--1.23%--x64_sys_call
+            |          |          __x64_sys_write
+            |          |          |          
+            |          |           --1.05%--ksys_write
+            |          |                     |          
+            |          |                      --0.88%--vfs_write
+            |          |          
+            |          |--0.63%--__ct_user_enter
+            |          |          
+            |           --0.57%--__ct_user_exit
+            |          
+             --0.93%--its_return_thunk
+
+     3.53%     3.53%  lat_syscall  [kernel.kallsyms]     [k] fdget_pos
+            |
+            ---0x5bae7b6fa01f
+               __GI___libc_write
+               entry_SYSCALL_64_after_hwframe
+               do_syscall_64
+               x64_sys_call
+               __x64_sys_write
+               |          
+                --3.06%--ksys_write
+                          fdget_pos
+
+     3.29%     2.70%  lat_syscall  [kernel.kallsyms]     [k] arch_exit_to_user_mode_prepare.isra.0
+            |          
+            |--2.70%--0x5bae7b6fa01f
+            |          __GI___libc_write
+            |          entry_SYSCALL_64_after_hwframe
+            |          |          
+            |           --2.30%--do_syscall_64
+            |                     arch_exit_to_user_mode_prepare.isra.0
+            |          
+             --0.60%--arch_exit_to_user_mode_prepare.isra.0
+
+     2.66%     1.53%  lat_syscall  [kernel.kallsyms]     [k] entry_SYSCALL_64_safe_stack
+            |          
+            |--1.53%--0x5bae7b6fa01f
+            |          __GI___libc_write
+            |          entry_SYSCALL_64_safe_stack
+            |          
+             --1.13%--entry_SYSCALL_64_safe_stack
+
+     2.36%     2.08%  lat_syscall  [kernel.kallsyms]     [k] ct_kernel_enter.isra.0
+            |          
+             --2.08%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       |          
+                        --1.80%--__ct_user_exit
+                                  ct_kernel_enter.isra.0
+
+     2.02%     2.02%  lat_syscall  lat_syscall           [.] l_overhead
+            |
+            ---0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               l_overhead
+
+     2.02%     0.00%  lat_syscall  [unknown]             [.] 0x00005bae7b6fd0e0
+            |
+            ---0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               0x5bae7b6fd0e0
+               l_overhead
+
+     1.50%     1.31%  lat_syscall  [kernel.kallsyms]     [k] aa_file_perm
+            |          
+             --1.31%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       x64_sys_call
+                       __x64_sys_write
+                       ksys_write
+                       vfs_write
+                       rw_verify_area
+                       security_file_permission
+                       apparmor_file_permission
+                       |          
+                        --0.91%--common_file_perm
+                                  |          
+                                   --0.83%--aa_file_perm
+
+     1.33%     1.23%  lat_syscall  [kernel.kallsyms]     [k] syscall_return_via_sysret
+            |          
+             --1.23%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       |          
+                        --1.06%--syscall_return_via_sysret
+
+     1.33%     1.01%  lat_syscall  [kernel.kallsyms]     [k] ct_kernel_exit.isra.0
+            |          
+             --1.01%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       |          
+                        --0.88%--__ct_user_enter
+                                  |          
+                                   --0.86%--ct_kernel_exit.isra.0
+
+     1.23%     1.11%  lat_syscall  [kernel.kallsyms]     [k] rcu_nocb_flush_deferred_wakeup
+            |          
+             --1.11%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       |          
+                        --1.00%--do_syscall_64
+                                  |          
+                                   --0.87%--rcu_nocb_flush_deferred_wakeup
+
+     1.06%     0.85%  lat_syscall  [kernel.kallsyms]     [k] context_tracking_recursion_enter
+            |          
+             --0.85%--0x5bae7b6fa01f
+                       __GI___libc_write
+                       entry_SYSCALL_64_after_hwframe
+                       do_syscall_64
+                       |          
+                        --0.76%--context_tracking_recursion_enter
+
+     0.95%     0.02%  lat_syscall  lat_syscall           [.] t_overhead
+            |          
+             --0.93%--t_overhead
+                       |          
+                        --0.53%--0x79108da7f940
+
+     0.75%     0.75%  lat_syscall  [kernel.kallsyms]     [k] fpregs_assert_state_consistent
+            |
+            ---0x5bae7b6fa01f
+               __GI___libc_write
+               |          
+                --0.73%--entry_SYSCALL_64_after_hwframe
+                          do_syscall_64
+
+     0.65%     0.55%  lat_syscall  lat_syscall           [.] do_write
+            |          
+             --0.55%--0x5bae7b6fa01f
+
+     0.58%     0.48%  lat_syscall  [kernel.kallsyms]     [k] write_null
+     0.53%     0.53%  lat_syscall  [vdso]                [.] 0x000000000000093d
+     0.53%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f940
+            |
+            ---0x79108da7f940
+
+     0.47%     0.47%  lat_syscall  [kernel.kallsyms]     [k] __rcu_read_lock
+     0.43%     0.28%  lat_syscall  lat_syscall           [.] write@plt
+     0.32%     0.23%  lat_syscall  [kernel.kallsyms]     [k] __rcu_read_unlock
+     0.28%     0.27%  lat_syscall  [kernel.kallsyms]     [k] rcu_preempt_deferred_qs
+     0.27%     0.00%  lat_syscall  [kernel.kallsyms]     [k] asm_sysvec_apic_timer_interrupt
+     0.23%     0.00%  lat_syscall  [kernel.kallsyms]     [k] sysvec_apic_timer_interrupt
+     0.20%     0.00%  lat_syscall  [kernel.kallsyms]     [k] __sysvec_apic_timer_interrupt
+     0.20%     0.00%  lat_syscall  [kernel.kallsyms]     [k] hrtimer_interrupt
+     0.15%     0.00%  lat_syscall  [kernel.kallsyms]     [k] __hrtimer_run_queues
+     0.15%     0.00%  lat_syscall  [kernel.kallsyms]     [k] tick_nohz_handler
+     0.15%     0.00%  lat_syscall  [kernel.kallsyms]     [k] update_process_times
+     0.13%     0.00%  lat_syscall  [kernel.kallsyms]     [k] sched_tick
+     0.10%     0.10%  lat_syscall  [kernel.kallsyms]     [k] 0x00007fffc0205f35
+     0.08%     0.00%  lat_syscall  [kernel.kallsyms]     [k] task_tick_fair
+     0.08%     0.08%  lat_syscall  [kernel.kallsyms]     [k] 0x00007fffc0206eb8
+     0.07%     0.02%  lat_syscall  [kernel.kallsyms]     [k] update_load_avg
+     0.05%     0.05%  lat_syscall  [kernel.kallsyms]     [k] __update_load_avg_cfs_rq
+     0.05%     0.03%  lat_syscall  [kernel.kallsyms]     [k] update_cfs_group
+     0.05%     0.05%  lat_syscall  [vdso]                [.] 0x00000000000009cd
+     0.05%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f9ce
+     0.05%     0.05%  lat_syscall  [vdso]                [.] 0x00000000000009b1
+     0.05%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f9b8
+     0.05%     0.03%  lat_syscall  [vdso]                [.] __vdso_gettimeofday
+     0.05%     0.05%  lat_syscall  [vdso]                [.] 0x000000000000094e
+     0.05%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f955
+     0.03%     0.03%  lat_syscall  [vdso]                [.] 0x000000000000097c
+     0.03%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f97f
+     0.03%     0.03%  lat_syscall  [vdso]                [.] 0x0000000000000907
+     0.03%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f90a
+     0.03%     0.03%  lat_syscall  lat_syscall           [.] insertsort
+     0.03%     0.02%  lat_syscall  libc.so.6             [.] __GI___getppid
+     0.03%     0.00%  lat_syscall  [kernel.kallsyms]     [k] 0xffffffffc0202eb8
+     0.03%     0.02%  lat_syscall  [kernel.kallsyms]     [k] tick_program_event
+     0.03%     0.03%  lat_syscall  [vdso]                [.] 0x0000000000000921
+     0.03%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f925
+     0.03%     0.03%  lat_syscall  [vdso]                [.] 0x0000000000000942
+     0.03%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f946
+     0.03%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f900
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b73c7
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b40f2
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b6fdc
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b6bf3
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b77b4
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b3d08
+     0.02%     0.00%  lat_syscall  lat_syscall           [.] benchmp_interval
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b680a
+     0.02%     0.02%  lat_syscall  [kernel.kallsyms]     [k] native_queued_spin_lock_slowpath
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] raw_spin_rq_lock_nested
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] _raw_spin_lock
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b391e
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b5c52
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b48c5
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x0000000000000900
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f901
+     0.02%     0.02%  lat_syscall  lat_syscall           [.] gettimeofday@plt
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b5868
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b44db
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b314e
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b3536
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b6422
+     0.02%     0.02%  lat_syscall  [kernel.kallsyms]     [k] ktime_get_update_offsets_now
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b547f
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x00000000000009dc
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000be52f
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f9df
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000be145
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bdd5a
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bfca4
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b4cae
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b5097
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c008e
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x0000000000000969
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b603a
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f96f
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bf8bb
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bed01
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c0477
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c0861
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bd972
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x0000000000000946
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bf4d2
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f949
+     0.02%     0.02%  lat_syscall  [kernel.kallsyms]     [k] tmigr_requires_handle_remote
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000be918
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c1fd6
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bf0e9
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c141c
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b7b9f
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c1bed
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bd58a
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x0000000000000994
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c1033
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f9ac
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x0000000000000975
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c0c4a
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f979
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bd1a2
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bc5e9
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x00000000000009d3
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bc9d1
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f9d5
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bcdba
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bc1fe
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x00000000000009be
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000c1805
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f9c2
+     0.02%     0.02%  lat_syscall  [kernel.kallsyms]     [k] account_user_time
+     0.02%     0.00%  lat_syscall  libc.so.6             [.] __getrusage
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b7f89
+     0.02%     0.02%  lat_syscall  [kernel.kallsyms]     [k] avg_vruntime
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] reweight_entity
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] place_entity
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bbe16
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] irqentry_exit
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] irqentry_exit_to_user_mode
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] arch_exit_to_user_mode_prepare.isra.0
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b8373
+     0.02%     0.02%  lat_syscall  [kernel.kallsyms]     [k] __irq_exit_rcu
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] irq_exit_rcu
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b875d
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bba2f
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000ba6a8
+     0.02%     0.02%  lat_syscall  [kernel.kallsyms]     [k] ktime_get
+     0.02%     0.00%  lat_syscall  [kernel.kallsyms]     [k] clockevents_program_event
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b8b47
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000baa97
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000ba2bc
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x0000000000000955
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b8f30
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f95c
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b931a
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b9703
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b9aec
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bb648
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000b9ed4
+     0.02%     0.02%  lat_syscall  [vdso]                [.] 0x0000000000000979
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bb262
+     0.02%     0.00%  lat_syscall  [vdso]                [.] 0x000079108da7f97c
+     0.02%     0.00%  lat_syscall  [unknown]             [.] 0x00000000000bae7d
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] __pi_memcpy
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] _dl_start_user
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] _dl_start
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] _dl_sysdep_start
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] dl_main
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] _dl_map_object_deps
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] _dl_catch_exception
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] openaux
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] _dl_map_object
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] _dl_map_object_from_fd
+     0.00%     0.00%  lat_syscall  ld-linux-x86-64.so.2  [.] mmap64
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] __x64_sys_mmap
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] ksys_mmap_pgoff
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] vm_mmap_pgoff
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] do_mmap
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] mmap_region
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] __mmap_region
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] __mmap_prepare
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] vms_gather_munmap_vmas
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] __split_vma
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] vma_complete
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] asm_exc_page_fault
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] mas_store_prealloc
+     0.00%     0.00%  lat_syscall  lat_syscall           [.] _start
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] mas_wr_store_entry
+     0.00%     0.00%  lat_syscall  libc.so.6             [.] __cxa_atexit
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] error_entry
+     0.00%     0.00%  lat_syscall  [kernel.kallsyms]     [k] memcpy_orig
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

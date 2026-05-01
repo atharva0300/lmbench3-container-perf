@@ -1,0 +1,100 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 903  of event 'cycles:P'
+# Event count (approx.): 1677404571
+#
+# Children      Self  Command         Shared Object         Symbol                                                                                                                                                                                                                                                                                                                                                                                                                                               
+# ........  ........  ..............  ....................  .....................................................................................................................................................................................................................................................................................................................................................................................................................................................
+#
+    31.29%     0.00%  docker          docker                [.] runtime.goexit.abi0
+            |
+            ---runtime.goexit.abi0
+               |          
+               |--28.56%--runtime.main
+               |          |          
+               |          |--14.81%--runtime.doInit1
+               |          |          |          
+               |          |          |--2.07%--github.com/docker/cli/vendor/github.com/distribution/reference.init
+               |          |          |          regexp.MustCompile
+               |          |          |          regexp.compile
+               |          |          |          |          
+               |          |          |          |--0.98%--regexp.compileOnePass
+               |          |          |          |          |          
+               |          |          |          |           --0.84%--regexp.makeOnePass
+               |          |          |          |                     |          
+               |          |          |          |                      --0.70%--regexp.makeOnePass.func1
+               |          |          |          |          
+               |          |          |           --0.70%--regexp/syntax.(*Regexp).Simplify
+               |          |          |                     regexp/syntax.(*Regexp).Simplify
+               |          |          |          
+               |          |          |--0.90%--github.com/docker/cli/vendor/google.golang.org/protobuf/reflect/protodesc.init.0
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/proto.Unmarshal
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/proto.UnmarshalOptions.unmarshal
+               |          |          |          |          
+               |          |          |           --0.63%--github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*messageState).ProtoMethods
+               |          |          |                     github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).initOnce
+               |          |          |                     |          
+               |          |          |                      --0.54%--github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).makeReflectFuncs
+               |          |          |                                github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).makeKnownFieldsFunc
+               |          |          |                                github.com/docker/cli/vendor/google.golang.org/protobuf/internal/filedesc.(*Message).Fields
+               |          |          |                                github.com/docker/cli/vendor/google.golang.org/protobuf/internal/filedesc.(*File).lazyInitOnce
+               |          |          |                                github.com/docker/cli/vendor/google.golang.org/protobuf/internal/filedesc.(*File).lazyRawInit
+               |          |          |                                github.com/docker/cli/vendor/google.golang.org/protobuf/internal/filedesc.(*File).unmarshalFull
+               |          |          |                                github.com/docker/cli/vendor/google.golang.org/protobuf/internal/filedesc.(*Message).unmarshalFull
+               |          |          |          
+               |          |          |--0.71%--github.com/docker/cli/vendor/google.golang.org/grpc.init.0
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/grpc.parseServiceConfig
+               |          |          |          
+               |          |          |--0.71%--github.com/docker/cli/vendor/github.com/xeipuuv/gojsonschema.init
+               |          |          |          regexp.MustCompile
+               |          |          |          regexp.compile
+               |          |          |          
+               |          |          |--0.70%--github.com/docker/cli/vendor/github.com/prometheus/procfs.init
+               |          |          |          regexp.MustCompile
+               |          |          |          regexp.compile
+               |          |          |          
+               |          |          |--0.65%--internal/godebug.init.0
+               |          |          |          internal/godebug.setUpdate
+               |          |          |          runtime.godebugNotify
+               |          |          |          internal/godebug.update
+               |          |          |          internal/godebug.parse
+               |          |          |          |          
+               |          |          |           --0.52%--internal/godebug.lookup
+               |          |          |          
+               |          |          |--0.63%--github.com/docker/cli/vendor/go.etcd.io/etcd/raft/v3/raftpb.init.0
+               |          |          |          github.com/docker/cli/vendor/github.com/golang/protobuf/proto.RegisterType
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.Export.LegacyMessageTypeOf
+               |          |          |          
+               |          |          |--0.63%--github.com/docker/cli/vendor/github.com/klauspost/compress/internal/snapref.init
+               |          |          |          hash/crc32.MakeTable
+               |          |          |          hash/crc32.init.OnceFunc.func3
+               |          |          |          sync.(*Once).Do
+               |          |          |          
+               |          |           --0.52%--github.com/docker/cli/vendor/google.golang.org/grpc/internal/binarylog.init
+               |          |                     regexp.MustCompile
+               |          |                     regexp.compile
+               |          |          
+               |           --10.43%--main.main
+               |                     main.dockerMain
+               |                     |          
+               |                      --10.19%--main.runDocker
+               |                                |          
+               |                                |--5.29%--main.newDockerCommand
+               |                                |          |          
+               |                                |           --5.05%--github.com/docker/cli/cli/command/commands.AddCommands
+               |                                |                     |          
+               |                                |                     |--0.95%--github.com/docker/cli/cli/command/container.newContainerCommand
+               |                                |                     |          
+               |                                |                      --0.72%--github.com/docker/cli/cli/command/service.newServiceCommand
+               |                                |          
+               |                                 --4.33%--github.com/docker/cli/vendor/github.com/spf13/cobra.(*Command).ExecuteC
+               |                                           |          
+               |                                            --3.75%--github.com/docker/cli/vendor/github.com/spf13/cobra.(*Command).execute
+               |                                                      |          
+               |                                                      |--3.23%--main.runDocker.(*DockerCli).InstrumentCobraCommands.func5.2
+               |                                                      |          |          
+               |                                                      |           --2.99%--github.com/docker/cli/cli/command/container.newRunCommand.func1
+               |                                                      |                     github.com/docker/cli/cli/command/container.runRun

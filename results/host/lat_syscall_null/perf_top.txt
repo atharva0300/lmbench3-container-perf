@@ -1,0 +1,100 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 6K of event 'cycles:P'
+# Event count (approx.): 15161316239
+#
+# Children      Self  Command      Shared Object         Symbol                                   
+# ........  ........  ...........  ....................  .........................................
+#
+    92.35%     0.00%  lat_syscall  [unknown]             [k] 0x00005e5b3e00401f
+            |
+            ---0x5e5b3e00401f
+               |          
+               |--89.57%--__GI___getppid
+               |          |          
+               |          |--65.74%--entry_SYSCALL_64_after_hwframe
+               |          |          |          
+               |          |          |--50.34%--do_syscall_64
+               |          |          |          |          
+               |          |          |          |--13.61%--__ct_user_enter
+               |          |          |          |          |          
+               |          |          |          |          |--6.53%--vtime_user_enter
+               |          |          |          |          |          |          
+               |          |          |          |          |           --5.71%--get_vtime_delta
+               |          |          |          |          |                     |          
+               |          |          |          |          |                      --4.48%--sched_clock
+               |          |          |          |          |                                |          
+               |          |          |          |          |                                 --3.72%--sched_clock_noinstr
+               |          |          |          |          |                                           |          
+               |          |          |          |          |                                            --3.67%--native_sched_clock
+               |          |          |          |          |          
+               |          |          |          |          |--3.03%--ct_kernel_exit_state
+               |          |          |          |          |          
+               |          |          |          |           --1.46%--ct_kernel_exit.isra.0
+               |          |          |          |          
+               |          |          |          |--13.60%--__ct_user_exit
+               |          |          |          |          |          
+               |          |          |          |          |--5.89%--vtime_user_exit
+               |          |          |          |          |          |          
+               |          |          |          |          |           --4.87%--get_vtime_delta
+               |          |          |          |          |                     |          
+               |          |          |          |          |                      --3.92%--sched_clock
+               |          |          |          |          |                                |          
+               |          |          |          |          |                                 --3.10%--sched_clock_noinstr
+               |          |          |          |          |                                           |          
+               |          |          |          |          |                                            --2.85%--native_sched_clock
+               |          |          |          |          |          
+               |          |          |          |          |--3.21%--ct_kernel_exit_state
+               |          |          |          |          |          
+               |          |          |          |           --2.89%--ct_kernel_enter.isra.0
+               |          |          |          |          
+               |          |          |          |--8.48%--x64_sys_call
+               |          |          |          |          |          
+               |          |          |          |          |--6.31%--__x64_sys_getppid
+               |          |          |          |          |          |          
+               |          |          |          |          |          |--4.76%--__task_pid_nr_ns
+               |          |          |          |          |          |          
+               |          |          |          |          |           --0.56%--__rcu_read_lock
+               |          |          |          |          |          
+               |          |          |          |           --0.69%--__rcu_read_unlock
+               |          |          |          |          
+               |          |          |          |--2.88%--arch_exit_to_user_mode_prepare.isra.0
+               |          |          |          |          
+               |          |          |          |--1.16%--context_tracking_recursion_enter
+               |          |          |          |          
+               |          |          |          |--0.59%--rcu_nocb_flush_deferred_wakeup
+               |          |          |          |          
+               |          |          |           --0.57%--vtime_user_exit
+               |          |          |          
+               |          |          |--10.15%--clear_bhb_loop
+               |          |          |          
+               |          |          |--0.61%--arch_exit_to_user_mode_prepare.isra.0
+               |          |          |          
+               |          |           --0.57%--__ct_user_exit
+               |          |          
+               |          |--10.68%--entry_SYSCALL_64
+               |          |          
+               |          |--3.95%--entry_SYSCALL_64_safe_stack
+               |          |          
+               |          |--1.75%--clear_bhb_loop
+               |          |          
+               |          |--0.98%--syscall_return_via_sysret
+               |          |          
+               |           --0.64%--entry_SYSRETQ_unsafe_stack
+               |          
+                --2.34%--do_getppid
+
+    91.76%     8.56%  lat_syscall  libc.so.6             [.] __GI___getppid
+            |          
+            |--83.20%--__GI___getppid
+            |          |          
+            |          |--65.76%--entry_SYSCALL_64_after_hwframe
+            |          |          |          
+            |          |          |--50.36%--do_syscall_64
+            |          |          |          |          
+            |          |          |          |--13.61%--__ct_user_exit
+            |          |          |          |          |          
+            |          |          |          |          |--5.89%--vtime_user_exit

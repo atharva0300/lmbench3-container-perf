@@ -1,0 +1,100 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 12K of event 'cycles:P'
+# Event count (approx.): 29958433804
+#
+# Children      Self  Command      Shared Object         Symbol                                   
+# ........  ........  ...........  ....................  .........................................
+#
+    90.94%     0.00%  lat_syscall  [unknown]             [k] 0x00005fb96502701f
+            |
+            ---0x5fb96502701f
+               |          
+                --90.47%--read
+                          |          
+                          |--71.37%--entry_SYSCALL_64_after_hwframe
+                          |          |          
+                          |          |--60.54%--do_syscall_64
+                          |          |          |          
+                          |          |          |--29.64%--x64_sys_call
+                          |          |          |          |          
+                          |          |          |           --28.70%--__x64_sys_read
+                          |          |          |                     |          
+                          |          |          |                      --27.79%--ksys_read
+                          |          |          |                                |          
+                          |          |          |                                |--21.47%--vfs_read
+                          |          |          |                                |          |          
+                          |          |          |                                |          |--7.18%--rw_verify_area
+                          |          |          |                                |          |          |          
+                          |          |          |                                |          |          |--5.42%--security_file_permission
+                          |          |          |                                |          |          |          |          
+                          |          |          |                                |          |          |           --4.01%--apparmor_file_permission
+                          |          |          |                                |          |          |                     |          
+                          |          |          |                                |          |          |                      --3.43%--common_file_perm
+                          |          |          |                                |          |          |                                |          
+                          |          |          |                                |          |          |                                 --1.12%--aa_file_perm
+                          |          |          |                                |          |          |          
+                          |          |          |                                |          |           --0.52%--apparmor_file_permission
+                          |          |          |                                |          |          
+                          |          |          |                                |          |--4.50%--read_zero
+                          |          |          |                                |          |          
+                          |          |          |                                |          |--4.39%--__fsnotify_parent
+                          |          |          |                                |          |          
+                          |          |          |                                |           --0.77%--rep_stos_alternative
+                          |          |          |                                |          
+                          |          |          |                                |--3.24%--fdget_pos
+                          |          |          |                                |          
+                          |          |          |                                 --0.61%--read_zero
+                          |          |          |          
+                          |          |          |--11.32%--__ct_user_enter
+                          |          |          |          |          
+                          |          |          |          |--5.67%--vtime_user_enter
+                          |          |          |          |          |          
+                          |          |          |          |           --4.95%--get_vtime_delta
+                          |          |          |          |                     |          
+                          |          |          |          |                      --3.89%--sched_clock
+                          |          |          |          |                                |          
+                          |          |          |          |                                 --3.43%--sched_clock_noinstr
+                          |          |          |          |                                           |          
+                          |          |          |          |                                            --3.26%--native_sched_clock
+                          |          |          |          |          
+                          |          |          |          |--2.65%--ct_kernel_exit_state
+                          |          |          |          |          
+                          |          |          |           --1.10%--ct_kernel_exit.isra.0
+                          |          |          |          
+                          |          |          |--9.47%--__ct_user_exit
+                          |          |          |          |          
+                          |          |          |          |--3.92%--vtime_user_exit
+                          |          |          |          |          |          
+                          |          |          |          |           --3.20%--get_vtime_delta
+                          |          |          |          |                     |          
+                          |          |          |          |                      --2.50%--sched_clock
+                          |          |          |          |                                |          
+                          |          |          |          |                                 --1.86%--sched_clock_noinstr
+                          |          |          |          |                                           |          
+                          |          |          |          |                                            --1.77%--native_sched_clock
+                          |          |          |          |          
+                          |          |          |          |--2.51%--ct_kernel_exit_state
+                          |          |          |          |          
+                          |          |          |           --1.93%--ct_kernel_enter.isra.0
+                          |          |          |          
+                          |          |          |--2.16%--arch_exit_to_user_mode_prepare.isra.0
+                          |          |          |          
+                          |          |          |--0.73%--context_tracking_recursion_enter
+                          |          |          |          
+                          |          |           --0.63%--rcu_nocb_flush_deferred_wakeup
+                          |          |          
+                          |           --7.30%--clear_bhb_loop
+                          |          
+                          |--7.26%--entry_SYSCALL_64
+                          |          
+                          |--2.88%--entry_SYSCALL_64_safe_stack
+                          |          
+                          |--1.28%--clear_bhb_loop
+                          |          
+                           --1.10%--syscall_return_via_sysret
+
+    90.57%     6.03%  lat_syscall  libc.so.6             [.] read

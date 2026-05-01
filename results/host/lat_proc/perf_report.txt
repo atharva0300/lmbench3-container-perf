@@ -1,0 +1,444 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 465  of event 'cycles:P'
+# Event count (approx.): 1141619084
+#
+# Children      Self  Command   Shared Object         Symbol                             
+# ........  ........  ........  ....................  ...................................
+#
+    59.52%    59.30%  lat_proc  lat_proc              [.] time_N
+            |
+            ---time_N
+
+    26.68%    26.68%  lat_proc  lat_proc              [.] l_overhead
+            |
+            ---0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               l_overhead
+
+    26.68%     0.00%  lat_proc  [unknown]             [.] 0x0000615adb91c0e0
+            |
+            ---0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               l_overhead
+
+    12.19%     0.87%  lat_proc  lat_proc              [.] t_overhead
+            |          
+             --11.32%--t_overhead
+                       |          
+                       |--6.97%--0x78c1c7697940
+                       |          
+                       |--0.65%--0x78c1c7697955
+                       |          
+                        --0.65%--0x78c1c769796f
+
+     6.97%     6.97%  lat_proc  [vdso]                [.] 0x000000000000093d
+     6.97%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c7697940
+            |
+            ---0x78c1c7697940
+
+     1.09%     0.44%  lat_proc  lat_proc              [.] gettimeofday@plt
+            |          
+             --0.65%--gettimeofday@plt
+
+     0.87%     0.87%  lat_proc  [vdso]                [.] 0x00000000000009dc
+     0.87%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c76979df
+            |
+            ---0x78c1c76979df
+
+     0.65%     0.65%  lat_proc  [vdso]                [.] 0x000000000000094e
+     0.65%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c7697955
+            |
+            ---0x78c1c7697955
+
+     0.65%     0.65%  lat_proc  [vdso]                [.] 0x0000000000000969
+     0.65%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c769796f
+            |
+            ---0x78c1c769796f
+
+     0.44%     0.00%  lat_proc  [kernel.kallsyms]     [k] asm_sysvec_apic_timer_interrupt
+     0.44%     0.44%  lat_proc  [vdso]                [.] 0x0000000000000975
+     0.44%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c7697979
+     0.44%     0.44%  lat_proc  [vdso]                [.] 0x00000000000009be
+     0.44%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c76979c2
+     0.44%     0.00%  lat_proc  [vdso]                [.] __vdso_gettimeofday
+     0.44%     0.44%  lat_proc  [vdso]                [.] 0x0000000000000921
+     0.44%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c7697925
+     0.44%     0.44%  lat_proc  [vdso]                [.] 0x00000000000009b8
+     0.44%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c76979bc
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000605bb
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005fde7
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005f616
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000601d1
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005f9ff
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005f22d
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005ee44
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005ea5b
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000609a4
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005e672
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000060d8e
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000006194b
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005e28a
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005dea1
+     0.22%     0.22%  lat_proc  [kernel.kallsyms]     [k] raw_spin_rq_lock_nested
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] sysvec_apic_timer_interrupt
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] __sysvec_apic_timer_interrupt
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] hrtimer_interrupt
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] __hrtimer_run_queues
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] tick_nohz_handler
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] update_process_times
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] sched_tick
+     0.22%     0.22%  lat_proc  [vdso]                [.] 0x000000000000097c
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000061560
+     0.22%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c769797f
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000061177
+     0.22%     0.22%  lat_proc  [vdso]                [.] 0x0000000000000955
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005dab8
+     0.22%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c769795c
+     0.22%     0.22%  lat_proc  [vdso]                [.] 0x0000000000000994
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000052ac6
+     0.22%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c76979ac
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005d6d0
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000053681
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000053a69
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000053298
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000053e54
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000052eaf
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005d2e8
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005423f
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005cf00
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005462a
+     0.22%     0.22%  lat_proc  [vdso]                [.] 0x0000000000000979
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005cb18
+     0.22%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c769797c
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000054a13
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005c731
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000054dfd
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005c34a
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005abd5
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000059848
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005618a
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005712e
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000057900
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000059c31
+     0.22%     0.22%  lat_proc  [vdso]                [.] 0x0000000000000940
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005bb79
+     0.22%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c7697942
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005b3a7
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005695c
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005a7eb
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000057ce9
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005a403
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005afbe
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000584bb
+     0.22%     0.22%  lat_proc  [vdso]                [.] 0x0000000000000907
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005bf62
+     0.22%     0.00%  lat_proc  [vdso]                [.] 0x000078c1c769790a
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005a019
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000056d45
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000551e6
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005b790
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000055da1
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000559b8
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000555cf
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000058c8d
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x000000000005945f
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000057517
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000059076
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000580d2
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x00000000000588a4
+     0.22%     0.00%  lat_proc  [unknown]             [.] 0x0000000000056573
+     0.22%     0.22%  lat_proc  [kernel.kallsyms]     [k] do_wp_page
+     0.22%     0.00%  lat_proc  lat_proc              [.] benchmp_interval
+     0.22%     0.00%  lat_proc  libc.so.6             [.] 0x000078c1c7447bbe
+     0.22%     0.00%  lat_proc  libc.so.6             [.] __run_exit_handlers
+     0.22%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_fini
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] asm_exc_page_fault
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] exc_page_fault
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] do_user_addr_fault
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] handle_mm_fault
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] __handle_mm_fault
+     0.22%     0.00%  lat_proc  [kernel.kallsyms]     [k] handle_pte_fault
+     0.09%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_start_user
+     0.04%     0.04%  lat_proc  [kernel.kallsyms]     [k] vma_interval_tree_insert
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_start
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_sysdep_start
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] dl_main
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_map_object_deps
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_catch_exception
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] openaux
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_map_object
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_map_object_from_fd
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] mmap64
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] entry_SYSCALL_64_after_hwframe
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] do_syscall_64
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] x64_sys_call
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] __x64_sys_mmap
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] ksys_mmap_pgoff
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] vm_mmap_pgoff
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] do_mmap
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] mmap_region
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] __mmap_region
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] __mmap_prepare
+     0.04%     0.04%  lat_proc  libc.so.6             [.] _init_first
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] vms_gather_munmap_vmas
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] __split_vma
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] _dl_init
+     0.04%     0.00%  lat_proc  [kernel.kallsyms]     [k] vma_prepare
+     0.04%     0.00%  lat_proc  ld-linux-x86-64.so.2  [.] call_init.part.0
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

@@ -1,0 +1,100 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 910  of event 'cycles:P'
+# Event count (approx.): 1683987093
+#
+# Children      Self  Command         Shared Object         Symbol                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+# ........  ........  ..............  ....................  .......................................................................................................................................................................................................................................................................................................................................................................................................................................................
+#
+    30.77%     0.00%  docker          docker                [.] runtime.goexit.abi0
+            |
+            ---runtime.goexit.abi0
+               |          
+               |--28.17%--runtime.main
+               |          |          
+               |          |--15.73%--runtime.doInit1
+               |          |          |          
+               |          |          |--2.49%--github.com/docker/cli/vendor/github.com/distribution/reference.init
+               |          |          |          regexp.MustCompile
+               |          |          |          regexp.compile
+               |          |          |          |          
+               |          |          |          |--0.83%--regexp/syntax.parse
+               |          |          |          |          
+               |          |          |          |--0.69%--regexp.compileOnePass
+               |          |          |          |          
+               |          |          |           --0.55%--regexp/syntax.(*Regexp).Simplify
+               |          |          |          
+               |          |          |--1.26%--github.com/docker/cli/vendor/github.com/prometheus/procfs.init
+               |          |          |          regexp.MustCompile
+               |          |          |          regexp.compile
+               |          |          |          |          
+               |          |          |           --0.56%--regexp/syntax.parse
+               |          |          |          
+               |          |          |--0.95%--github.com/docker/cli/vendor/google.golang.org/protobuf/reflect/protodesc.init.0
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/proto.Unmarshal
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/proto.UnmarshalOptions.unmarshal
+               |          |          |          |          
+               |          |          |           --0.68%--github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).unmarshal-fm
+               |          |          |                     github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).unmarshal
+               |          |          |                     github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).unmarshalPointer
+               |          |          |                     github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).unmarshalPointerEager
+               |          |          |                     github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.consumeMessageSliceInfo
+               |          |          |                     github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.(*MessageInfo).unmarshalPointer
+               |          |          |          
+               |          |          |--0.85%--github.com/docker/cli/vendor/github.com/xeipuuv/gojsonschema.init
+               |          |          |          regexp.MustCompile
+               |          |          |          regexp.compile
+               |          |          |          
+               |          |          |--0.68%--github.com/docker/cli/vendor/go.etcd.io/etcd/raft/v3/raftpb.init.0
+               |          |          |          github.com/docker/cli/vendor/github.com/golang/protobuf/proto.RegisterType
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.Export.LegacyMessageTypeOf
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.legacyLoadMessageType
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.legacyLoadMessageInfo
+               |          |          |          github.com/docker/cli/vendor/google.golang.org/protobuf/internal/impl.legacyLoadMessageDesc
+               |          |          |          
+               |          |           --0.52%--internal/godebug.init.0
+               |          |                     internal/godebug.setUpdate
+               |          |                     runtime.godebugNotify
+               |          |                     internal/godebug.update
+               |          |                     internal/godebug.parse
+               |          |          
+               |           --10.16%--main.main
+               |                     main.dockerMain
+               |                     |          
+               |                      --9.87%--main.runDocker
+               |                                |          
+               |                                |--5.41%--main.newDockerCommand
+               |                                |          |          
+               |                                |           --4.98%--github.com/docker/cli/cli/command/commands.AddCommands
+               |                                |                     |          
+               |                                |                     |--1.28%--github.com/docker/cli/cli/command/container.newContainerCommand
+               |                                |                     |          |          
+               |                                |                     |           --0.57%--github.com/docker/cli/cli/command/container.newCreateCommand
+               |                                |                     |          
+               |                                |                     |--1.00%--github.com/docker/cli/cli/command/service.newServiceCommand
+               |                                |                     |          |          
+               |                                |                     |           --0.57%--github.com/docker/cli/cli/command/service.newUpdateCommand
+               |                                |                     |          
+               |                                |                      --0.57%--github.com/docker/cli/cli/command/container.newRunCommand
+               |                                |          
+               |                                 --4.18%--github.com/docker/cli/vendor/github.com/spf13/cobra.(*Command).ExecuteC
+               |                                           |          
+               |                                            --4.03%--github.com/docker/cli/vendor/github.com/spf13/cobra.(*Command).execute
+               |                                                      |          
+               |                                                       --3.75%--main.runDocker.(*DockerCli).InstrumentCobraCommands.func5.2
+               |                                                                 github.com/docker/cli/cli/command/container.newRunCommand.func1
+               |                                                                 github.com/docker/cli/cli/command/container.runRun
+               |                                                                 |          
+               |                                                                  --3.46%--github.com/docker/cli/cli/command/container.runContainer
+               |                                                                            |          
+               |                                                                            |--1.97%--github.com/docker/cli/cli/command/container.createContainer
+               |                                                                            |          |          
+               |                                                                            |           --1.82%--github.com/docker/cli/vendor/github.com/moby/moby/client.(*Client).ContainerCreate
+               |                                                                            |                     github.com/docker/cli/vendor/github.com/moby/moby/client.(*Client).post
+               |                                                                            |                     |          
+               |                                                                            |                      --1.68%--github.com/docker/cli/vendor/github.com/moby/moby/client.prepareJSONRequest
+               |                                                                            |                                github.com/docker/cli/vendor/github.com/moby/moby/client.jsonEncode
+               |                                                                            |                                encoding/json.Marshal

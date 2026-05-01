@@ -1,0 +1,100 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 11K of event 'cycles:P'
+# Event count (approx.): 28156096691
+#
+# Children      Self  Command  Shared Object         Symbol                                          
+# ........  ........  .......  ....................  ................................................
+#
+    81.84%     1.17%  lat_sig  [kernel.kallsyms]     [k] entry_SYSCALL_64_after_hwframe
+            |          
+            |--80.67%--entry_SYSCALL_64_after_hwframe
+            |          |          
+            |          |--75.64%--do_syscall_64
+            |          |          |          
+            |          |          |--41.75%--x64_sys_call
+            |          |          |          |          
+            |          |          |          |--32.42%--__x64_sys_kill
+            |          |          |          |          |          
+            |          |          |          |          |--27.23%--kill_something_info
+            |          |          |          |          |          |          
+            |          |          |          |          |          |--21.52%--kill_pid_info_type
+            |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |--15.84%--check_kill_permission
+            |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |--12.45%--security_task_kill
+            |          |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |          |--10.82%--apparmor_task_kill
+            |          |          |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |          |          |--5.13%--aa_may_signal
+            |          |          |          |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |          |          |           --2.85%--profile_signal_perm
+            |          |          |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |          |           --1.25%--get_task_cred
+            |          |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |           --0.73%--hook_task_kill
+            |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |--1.17%--audit_signal_info
+            |          |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |          |           --0.57%--audit_signal_info_syscall
+            |          |          |          |          |          |          |          |          
+            |          |          |          |          |          |          |           --0.71%--apparmor_task_kill
+            |          |          |          |          |          |          |          
+            |          |          |          |          |          |           --4.36%--do_send_sig_info
+            |          |          |          |          |          |                     |          
+            |          |          |          |          |          |                      --3.71%--send_signal_locked
+            |          |          |          |          |          |                                |          
+            |          |          |          |          |          |                                 --3.21%--__send_signal_locked
+            |          |          |          |          |          |                                           |          
+            |          |          |          |          |          |                                           |--1.11%--kmem_cache_alloc_noprof
+            |          |          |          |          |          |                                           |          |          
+            |          |          |          |          |          |                                           |           --0.66%--__memcg_slab_post_alloc_hook
+            |          |          |          |          |          |                                           |          
+            |          |          |          |          |          |                                            --0.63%--complete_signal
+            |          |          |          |          |          |          
+            |          |          |          |          |           --3.91%--find_vpid
+            |          |          |          |          |                     |          
+            |          |          |          |          |                      --3.49%--idr_find
+            |          |          |          |          |                                |          
+            |          |          |          |          |                                 --3.38%--radix_tree_lookup
+            |          |          |          |          |                                           |          
+            |          |          |          |          |                                            --3.23%--__radix_tree_lookup
+            |          |          |          |          |          
+            |          |          |          |          |--1.70%--__task_pid_nr_ns
+            |          |          |          |          |          
+            |          |          |          |           --0.59%--from_kuid_munged
+            |          |          |          |                     map_id_range_up
+            |          |          |          |          
+            |          |          |          |--7.38%--__x64_sys_rt_sigreturn
+            |          |          |          |          |          
+            |          |          |          |          |--5.80%--restore_sigcontext
+            |          |          |          |          |          |          
+            |          |          |          |          |           --4.51%--fpu__restore_sig
+            |          |          |          |          |                     |          
+            |          |          |          |          |                      --4.35%--__fpu_restore_sig
+            |          |          |          |          |                                |          
+            |          |          |          |          |                                |--2.38%--restore_fpregs_from_user
+            |          |          |          |          |                                |          |          
+            |          |          |          |          |                                |           --1.93%--__restore_fpregs_from_user
+            |          |          |          |          |                                |          
+            |          |          |          |          |                                 --0.54%--check_xstate_in_sigframe
+            |          |          |          |          |          
+            |          |          |          |           --0.51%--restore_altstack
+            |          |          |          |          
+            |          |          |           --0.78%--__get_user_nocheck_8
+            |          |          |          
+            |          |          |--15.56%--exit_to_user_mode_loop
+            |          |          |          |          
+            |          |          |           --15.19%--arch_do_signal_or_restart
+            |          |          |                     |          
+            |          |          |                     |--8.93%--setup_rt_frame
+            |          |          |                     |          |          
+            |          |          |                     |          |--7.26%--x64_setup_rt_frame
+            |          |          |                     |          |          |          
+            |          |          |                     |          |           --6.14%--get_sigframe
+            |          |          |                     |          |                     |          
+            |          |          |                     |          |                      --3.94%--copy_fpstate_to_sigframe
+            |          |          |                     |          |                                |          

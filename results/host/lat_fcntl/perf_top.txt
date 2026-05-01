@@ -1,0 +1,100 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 9K of event 'cycles:P'
+# Event count (approx.): 22329032791
+#
+# Children      Self  Command    Shared Object         Symbol                                   
+# ........  ........  .........  ....................  .........................................
+#
+    90.32%     1.67%  lat_fcntl  libc.so.6             [.] __libc_fcntl64
+            |          
+            |--88.64%--__libc_fcntl64
+            |          |          
+            |          |--46.26%--__fcntl64_nocancel_adjusted
+            |          |          |          
+            |          |           --43.81%--entry_SYSCALL_64_after_hwframe
+            |          |                     |          
+            |          |                     |--42.24%--do_syscall_64
+            |          |                     |          |          
+            |          |                     |          |--29.31%--x64_sys_call
+            |          |                     |          |          |          
+            |          |                     |          |           --29.02%--__x64_sys_fcntl
+            |          |                     |          |                     |          
+            |          |                     |          |                     |--27.92%--do_fcntl
+            |          |                     |          |                     |          |          
+            |          |                     |          |                     |          |--26.20%--fcntl_setlk
+            |          |                     |          |                     |          |          |          
+            |          |                     |          |                     |          |          |--20.62%--posix_lock_inode
+            |          |                     |          |                     |          |          |          |          
+            |          |                     |          |                     |          |          |          |--13.08%--locks_unlink_lock_ctx
+            |          |                     |          |                     |          |          |          |          |          
+            |          |                     |          |                     |          |          |          |           --12.78%--__locks_wake_up_blocks
+            |          |                     |          |                     |          |          |          |                     |          
+            |          |                     |          |                     |          |          |          |                      --12.70%--__wake_up
+            |          |                     |          |                     |          |          |          |                                |          
+            |          |                     |          |                     |          |          |          |                                |--9.11%--__wake_up_common
+            |          |                     |          |                     |          |          |          |                                |          |          
+            |          |                     |          |                     |          |          |          |                                |           --8.94%--autoremove_wake_function
+            |          |                     |          |                     |          |          |          |                                |                     |          
+            |          |                     |          |                     |          |          |          |                                |                      --8.91%--default_wake_function
+            |          |                     |          |                     |          |          |          |                                |                                |          
+            |          |                     |          |                     |          |          |          |                                |                                 --8.84%--try_to_wake_up
+            |          |                     |          |                     |          |          |          |                                |                                           |          
+            |          |                     |          |                     |          |          |          |                                |                                            --8.28%--ttwu_do_activate
+            |          |                     |          |                     |          |          |          |                                |                                                      |          
+            |          |                     |          |                     |          |          |          |                                |                                                       --7.46%--enqueue_task
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |--5.61%--enqueue_task_fair
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |--2.87%--update_cfs_group
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |          |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |           --2.75%--reweight_entity
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |                     |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |                     |--0.82%--place_entity
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |                     |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |                      --0.57%--update_entity_lag
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |--0.86%--enqueue_entity
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |--0.57%--update_load_avg
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |           --0.55%--tick_nohz_dep_set_cpu
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |--1.07%--psi_task_change
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          |          
+            |          |                     |          |                     |          |          |          |                                |                                                                 |           --0.69%--psi_group_change
+            |          |                     |          |                     |          |          |          |                                |                                                                 |          
+            |          |                     |          |                     |          |          |          |                                |                                                                  --0.57%--update_cfs_group
+            |          |                     |          |                     |          |          |          |                                |          
+            |          |                     |          |                     |          |          |          |                                |--1.83%--_raw_spin_unlock_irqrestore
+            |          |                     |          |                     |          |          |          |                                |          |          
+            |          |                     |          |                     |          |          |          |                                |           --1.10%--asm_sysvec_irq_work
+            |          |                     |          |                     |          |          |          |                                |                     sysvec_irq_work
+            |          |                     |          |                     |          |          |          |                                |          
+            |          |                     |          |                     |          |          |          |                                 --1.39%--asm_sysvec_irq_work
+            |          |                     |          |                     |          |          |          |          
+            |          |                     |          |                     |          |          |          |--1.64%--kmem_cache_free
+            |          |                     |          |                     |          |          |          |          
+            |          |                     |          |                     |          |          |          |--1.38%--kmem_cache_alloc_noprof
+            |          |                     |          |                     |          |          |          |          
+            |          |                     |          |                     |          |          |          |--1.12%--locks_dispose_list
+            |          |                     |          |                     |          |          |          |          |          
+            |          |                     |          |                     |          |          |          |           --0.86%--kmem_cache_free
+            |          |                     |          |                     |          |          |          |          
+            |          |                     |          |                     |          |          |           --0.89%--memset_orig
+            |          |                     |          |                     |          |          |          
+            |          |                     |          |                     |          |          |--1.06%--security_file_lock
+            |          |                     |          |                     |          |          |          |          
+            |          |                     |          |                     |          |          |           --0.74%--apparmor_file_lock
+            |          |                     |          |                     |          |          |                     |          
+            |          |                     |          |                     |          |          |                      --0.69%--common_file_perm
+            |          |                     |          |                     |          |          |          
+            |          |                     |          |                     |          |          |--1.03%--kmem_cache_free
+            |          |                     |          |                     |          |          |          
+            |          |                     |          |                     |          |           --0.72%--kmem_cache_alloc_noprof
+            |          |                     |          |                     |          |          
+            |          |                     |          |                     |           --0.55%--_copy_from_user
+            |          |                     |          |                     |          

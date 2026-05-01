@@ -1,0 +1,100 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 465  of event 'cycles:P'
+# Event count (approx.): 1141619084
+#
+# Children      Self  Command   Shared Object         Symbol                             
+# ........  ........  ........  ....................  ...................................
+#
+    59.52%    59.30%  lat_proc  lat_proc              [.] time_N
+            |
+            ---time_N
+
+    26.68%    26.68%  lat_proc  lat_proc              [.] l_overhead
+            |
+            ---0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
+               0x615adb91c0e0
