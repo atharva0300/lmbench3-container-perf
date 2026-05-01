@@ -1,0 +1,44 @@
+=== System & Config Info (K8s) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (taskset internal): 1
+Benchmark Command: lat_syscall -P 1 -W 5 -N 1000 write
+==================================
+
+===== RAW RESULTS =====
+Run 1: 0.3438
+Run 2: 0.3430
+Run 3: 0.3436
+Run 4: 0.3436
+Run 5: 0.3432
+Run 6: 0.3438
+Run 7: 0.3434
+Run 8: 0.3431
+Run 9: 0.3443
+Run 10: 0.3435
+Run 11: 0.3444
+Run 12: 0.3433
+Run 13: 0.3436
+Run 14: 0.3435
+Run 15: 0.3435
+Run 16: 0.3429
+Run 17: 0.3436
+Run 18: 0.3437
+Run 19: 0.3432
+Run 20: 0.3434
+Run 21: 0.3437
+Run 22: 0.3450
+Run 23: 0.3437
+Run 24: 0.3437
+Run 25: 0.3434
+
+===== STATISTICS =====
+Samples: 20
+Mean: .34363500000000000000
+Median: .34355000000000000000
+Variance: .00000021427500000000
+Standard Deviation: .00046289847699036556
+Min: 0.3429
+Max: 0.3450
+Variation (Range): .0021
+Coefficient of Variation (%): .13470644055185460100
+======================

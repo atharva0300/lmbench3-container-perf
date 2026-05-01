@@ -1,0 +1,44 @@
+=== System & Config Info (Docker) ===
+Linux mohitkhapekar-ASUS-TUF-Gaming 6.17.0-22-generic #22~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Mar 26 15:25:54 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+CPU_CORE Target (Docker cpuset): 1
+Benchmark Command: lat_syscall -P 1 -W 5 -N 1000 write
+=====================================
+
+===== RAW RESULTS =====
+Run 1: 0.2987
+Run 2: 0.2999
+Run 3: 0.3002
+Run 4: 0.3014
+Run 5: 0.2993
+Run 6: 0.2988
+Run 7: 0.2994
+Run 8: 0.2997
+Run 9: 0.3027
+Run 10: 0.2992
+Run 11: 0.2992
+Run 12: 0.2991
+Run 13: 0.2996
+Run 14: 0.2995
+Run 15: 0.2992
+Run 16: 0.2997
+Run 17: 0.2996
+Run 18: 0.2995
+Run 19: 0.3002
+Run 20: 0.3037
+Run 21: 0.2996
+Run 22: 0.2997
+Run 23: 0.2987
+Run 24: 0.3034
+Run 25: 0.2992
+
+===== STATISTICS =====
+Samples: 20
+Mean: .29998500000000000000
+Median: .29955000000000000000
+Variance: .00000203427500000000
+Standard Deviation: .00142628012676332274
+Min: 0.2987
+Max: 0.3037
+Variation (Range): .0050
+Coefficient of Variation (%): .47545048144517983800
+======================
