@@ -2,3 +2,4 @@
 #perf.data
 perf.data.old
 results/**/perf_script_sample.txt
+results/**/perf.txt
